@@ -5,14 +5,6 @@ Protocol messages.  It provides a library for use in building
 SIP user agents or any program in go that needs to be able to
 parse SIP messages.
 
-Installation
-
-(the following steps assume that you have mercurial and go
-installed already)
-1. hg clone https://sdr@bitbucket.org/sdr/sip_parser
-2. cd sip_parser
-3. make clean && make && make install
-
 Usage
 
 The library has an easy to use interface.  
