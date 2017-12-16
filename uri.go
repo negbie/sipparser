@@ -18,7 +18,7 @@ const (
 // uriStateFn is just a type used by the parse method
 type uriStateFn func(*URI) uriStateFn
 
-// URI is a struct that holds an error (hopefully nil), the raw value, 
+// URI is a struct that holds an error (hopefully nil), the raw value,
 // and the parsed uri.
 // Fields are as follows:
 // -- Error is the error (or nil)
@@ -43,7 +43,7 @@ type URI struct {
 	UserPassword string // this is the password (i.e. alice:passwd@bob.com)
 	HostInfo     string // this is everything after the @ or the entire uri
 	Host         string // the host in the uri
-	Port         string // the port 
+	Port         string // the port
 	UriParams    []*Param
 	Secure       bool // Indicates SIP-URI or SIPS-URI (true for SIPS-URI)
 	atPos        int
@@ -198,7 +198,11 @@ func parseUriHost(u *URI) uriStateFn {
 		case colon == 0:
 			u.Host = u.Raw[u.atPos+1 : u.atPos+firstSemi]
 		default:
-			u.Host = u.Raw[u.atPos+1 : u.atPos+colon+1]
+			if u.atPos != 0 {
+				u.Host = u.Raw[u.atPos+1 : u.atPos+colon+1]
+			} else {
+				u.Host = u.Raw[u.atPos : u.atPos+colon+1]
+			}
 		}
 	}
 	if firstSemi == -1 {
