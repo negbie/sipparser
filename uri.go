@@ -196,9 +196,18 @@ func parseUriHost(u *URI) uriStateFn {
 		}
 		switch {
 		case colon == 0:
-			u.Host = u.Raw[u.atPos+1 : u.atPos+firstSemi]
+			if u.atPos != 0 {
+				u.Host = u.Raw[u.atPos+1 : u.atPos+firstSemi]
+			} else {
+				u.Host = u.Raw[u.atPos : u.atPos+firstSemi]
+			}
+
 		default:
-			u.Host = u.Raw[u.atPos+1 : u.atPos+colon+1]
+			if u.atPos != 0 {
+				u.Host = u.Raw[u.atPos+1 : u.atPos+colon+1]
+			} else {
+				u.Host = u.Raw[u.atPos : u.atPos+colon+1]
+			}
 		}
 	}
 	if firstSemi == -1 {
@@ -215,9 +224,18 @@ func parseUriHost(u *URI) uriStateFn {
 		}
 		switch {
 		case colon == 0:
-			u.Host = u.Raw[u.atPos+1:]
+			if u.atPos != 0 {
+				u.Host = u.Raw[u.atPos+1:]
+			} else {
+				u.Host = u.Raw[u.atPos:]
+			}
+
 		default:
-			u.Host = u.Raw[u.atPos+1 : u.atPos+colon+1]
+			if u.atPos != 0 {
+				u.Host = u.Raw[u.atPos+1 : u.atPos+colon+1]
+			} else {
+				u.Host = u.Raw[u.atPos : u.atPos+colon+1]
+			}
 		}
 	}
 	return nil
