@@ -14,7 +14,7 @@ func TestFrom(t *testing.T) {
 	str := "\"Unknown\" <sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002"
 	sm.parseFrom(str)
 	if sm.Error != nil {
-		t.Errorf("[TestFrom] Error parsing from hdr: \"Unknown\" <sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002.  Received err: " + sm.Error.Error())
+		t.Errorf("[TestFrom] Error parsing from hdr: \"Unknown\" <sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002.  Received err: %v", sm.Error)
 	}
 	if sm.From.Name != "Unknown" {
 		t.Errorf("[TestFrom] Error parsing from hdr: \"Unknown\" <sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002.  Name field should be \"Unknown\".")
@@ -28,18 +28,18 @@ func TestFrom(t *testing.T) {
 	str = "<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002"
 	sm.parseFrom(str)
 	if sm.Error != nil {
-		t.Errorf("[TestFrom] Error parsing from hdr: \"<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002\".  Received err: " + sm.Error.Error())
+		t.Errorf("[TestFrom] Error parsing from hdr: \"<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002\".  Received err: %v", sm.Error)
 	}
 	if sm.From.Name != "" {
-		t.Errorf("[TestFrom] Error parsing from hdr: \"<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002\".  Name should be \"\" but received: " + sm.From.Name)
+		t.Errorf("[TestFrom] Error parsing from hdr: \"<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002\".  Name should be \"\" but received: \"%s\"", sm.From.Name)
 	}
 	if sm.From.URI.User != "5554441000" {
-		t.Errorf("[TestFrom] Error parsing from hdr:  \"<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002\".  URI.User should be \"5554441000\" but received: " + sm.From.URI.User)
+		t.Errorf("[TestFrom] Error parsing from hdr:  \"<sip:5554441000@0.0.0.0;user=phone;noa=national>;tag=dd737a8-co7387-INS002\".  URI.User should be \"5554441000\" but received: \"%s\"", sm.From.URI.User)
 	}
 	str = "sip:+12125551212@phone2net.com;tag=887s"
 	sm.parseFrom(str)
 	if sm.Error != nil {
-		t.Errorf("[TestFrom] Error parsing from hdr: sip:+12125551212@phone2net.com;tag=887s. Received err: %s", sm.Error.Error())
+		t.Errorf("[TestFrom] Error parsing from hdr: sip:+12125551212@phone2net.com;tag=887s. Received err: %v", sm.Error)
 	}
 	if sm.From.Tag != "887s" {
 		t.Errorf("[TestFrom] Error parsing from hdr: sip:+12125551212@phone2net.com;tag=887s.  sm.From.Tag should be \"887s\" but received: \"%s\".", sm.From.Tag)

@@ -7,13 +7,14 @@ package sipparser
 // Imports from the go standard library
 import (
 	"errors"
+	"fmt"
 )
 
-// pAssertedIdStateFn is just a fn type 
+// pAssertedIdStateFn is just a fn type
 type pAssertedIdStateFn func(p *PAssertedId) pAssertedIdStateFn
 
 // PAssertedId is a struct that holds:
-// -- Error is just an error
+// -- Error is just an os.Error
 // -- Val is the raw value
 // -- Name is the name value from the p-asserted-id hdr
 // -- URI is the parsed uri from the p-asserted-id hdr
@@ -66,7 +67,7 @@ func parsePAssertedIdGetUri(p *PAssertedId) pAssertedIdStateFn {
 	if left < right {
 		p.URI = ParseURI(p.Val[left+1 : right])
 		if p.URI.Error != nil {
-			p.Error = errors.New("parseRpidGetUri err: received err getting uri: " + p.URI.Error.Error())
+			p.Error = fmt.Errorf("parseRpidGetUri err: received err getting uri: %v", p.URI.Error)
 			return nil
 		}
 		return parsePAssertedIdGetParams

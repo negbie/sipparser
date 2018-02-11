@@ -1,11 +1,10 @@
 // Copyright 2011, Shelby Ramsey.   All rights reserved.
-// Use of this code is governed by a BSD license that can be 
+// Use of this code is governed by a BSD license that can be
 // found in the LICENSE.txt file.
 
 package sipparser
 
 // Imports from the go standard library
-import ()
 
 // AcceptParam is just a key:value pair of params for the accept
 // header
@@ -40,7 +39,7 @@ func (a *Accept) addParam(s string) {
 	}
 }
 
-// parse just gets a comma seperated list of the parameters from 
+// parse just gets a comma seperated list of the parameters from
 // the .Val and calls addparam on each of the parameters
 func (a *Accept) parse() {
 	cs := getCommaSeperated(a.Val)

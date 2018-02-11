@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// ContentDisposition is a struct that holds a parsed 
+// ContentDisposition is a struct that holds a parsed
 // content-disposition hdr:
 // -- Val is the raw value
 // -- DispType is the display type

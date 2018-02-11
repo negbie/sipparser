@@ -14,15 +14,15 @@ func TestRack(t *testing.T) {
 	s := "776656 1 INVITE"
 	sm.parseRack(s)
 	if sm.Error != nil {
-		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  Received err: " + sm.Error.Error())
+		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  Received err: %v", sm.Error)
 	}
 	if sm.Rack.RseqVal != "776656" {
-		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  RseqVal should be 776656 but received: ", sm.Rack.RseqVal)
+		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  RseqVal should be 776656 but received: %v", sm.Rack.RseqVal)
 	}
 	if sm.Rack.CseqVal != "1" {
-		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  CseqVal should be 1 but received: ", sm.Rack.CseqVal)
+		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  CseqVal should be 1 but received: %v", sm.Rack.CseqVal)
 	}
 	if sm.Rack.CseqMethod != "INVITE" {
-		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  CseqMethod should be \"INVITE\" but received:", sm.Rack.CseqMethod)
+		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  CseqMethod should be \"INVITE\" but received: \"%s\"", sm.Rack.CseqMethod)
 	}
 }

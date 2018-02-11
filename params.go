@@ -12,12 +12,12 @@ import (
 // Param is just a struct that holds a parameter and a value
 // As an example of this would be something like user=phone
 type Param struct {
-	Param string "param"
-	Val   string "val"
+	Param string
+	Val   string
 }
 
 // getParam is just a convenience function to pass a string
-// and get a *Param 
+// and get a *Param
 func getParam(s string) *Param {
 	p := new(Param)
 	for i := range s {

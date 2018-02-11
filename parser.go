@@ -3,6 +3,7 @@ package sipparser
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -69,6 +70,7 @@ type SipMsg struct {
 	Rseq               string
 	RseqInt            int
 	RecordRoute        []*URI
+	RTPStat            *RTPStat
 	Route              []*URI
 	Via                []*Via
 	Require            []string
@@ -113,7 +115,7 @@ func (s *SipMsg) addHdr(str string) {
 	}
 	sp := strings.IndexRune(str, ':')
 	if sp == -1 {
-		s.Error = errors.New("addHdr err: no semi found in: " + str)
+		s.Error = fmt.Errorf("addHdr err: no semi found in: %s", str)
 		return
 	}
 	s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
@@ -140,14 +142,20 @@ func (s *SipMsg) addHdr(str string) {
 		s.parseContentDisposition(s.hdrv)
 	case s.hdr == SIP_HDR_CONTENT_LENGTH || s.hdr == SIP_HDR_CONTENT_LENGTH_CMP:
 		s.ContentLength = s.hdrv
+		cl, err := strconv.Atoi(s.ContentLength)
+		if err != nil {
+			s.Error = fmt.Errorf("addHdr err: %q is not a valid content length: %s", s.ContentLength, err)
+			return
+		}
+		s.ContentLengthInt = cl
+	case s.hdr == SIP_HDR_CONTENT_TYPE || s.hdr == SIP_HDR_CONTENT_TYPE_CMP:
+		s.ContentType = s.hdrv
 	case s.hdr == SIP_HDR_CSEQ:
 		s.parseCseq(s.hdrv)
 	case s.hdr == SIP_HDR_FROM || s.hdr == SIP_HDR_FROM_CMP:
 		s.parseFrom(s.hdrv)
 	case s.hdr == SIP_HDR_MAX_FORWARDS:
 		s.MaxForwards = s.hdrv
-	case s.hdr == SIP_HDR_CONTENT_TYPE:
-		s.ContentType = s.hdrv		
 	case s.hdr == SIP_HDR_ORGANIZATION:
 		s.Organization = s.hdrv
 	case s.hdr == SIP_HDR_P_ASSERTED_IDENTITY:
@@ -166,6 +174,8 @@ func (s *SipMsg) addHdr(str string) {
 		s.RemotePartyIdVal = s.hdrv
 	case s.hdr == SIP_HDR_ROUTE:
 		s.parseRoute(s.hdrv)
+	case s.hdr == SIP_HDR_P_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT:
+		s.parseRTPStat(s.hdrv)
 	case s.hdr == SIP_HDR_SERVER:
 		s.Server = s.hdrv
 	case s.hdr == SIP_HDR_SUPPORTED:
@@ -217,10 +227,8 @@ func (s *SipMsg) GetCallingParty(str string) error {
 		return s.getCallingPartyRpid()
 	case str == CALLING_PARTY_PAID:
 		return s.getCallingPartyPaid()
-	default:
-		return s.getCallingPartyDefault()
 	}
-	return errors.New("GetCallingParty err: unknown err.  Fell through switch stmnt.")
+	return s.getCallingPartyDefault()
 }
 
 func (s *SipMsg) getCallingPartyDefault() error {
@@ -357,6 +365,11 @@ func (s *SipMsg) parseReason(str string) {
 	s.Reason.parse()
 }
 
+func (s *SipMsg) parseRTPStat(str string) {
+	s.RTPStat = &RTPStat{Val: str}
+	s.RTPStat.parse()
+}
+
 func (s *SipMsg) parseRecordRoute(str string) {
 	cs := getCommaSeperated(str)
 	for rt := range cs {
@@ -373,7 +386,7 @@ func (s *SipMsg) parseRecordRoute(str string) {
 		if left < right {
 			u := ParseURI(cs[rt][left+1 : right])
 			if u.Error != nil {
-				s.Error = errors.New("parseRecordRoute err: received err parsing uri: " + u.Error.Error())
+				s.Error = fmt.Errorf("parseRecordRoute err: received err parsing uri: %v", u.Error)
 				return
 			}
 			if s.RecordRoute == nil {
@@ -420,7 +433,7 @@ func (s *SipMsg) parseRoute(str string) {
 		if left < right {
 			u := ParseURI(cs[rt][left+1 : right])
 			if u.Error != nil {
-				s.Error = errors.New("parseRoute err: received err parsing uri: " + u.Error.Error())
+				s.Error = fmt.Errorf("parseRoute err: received err parsing uri: %v", u.Error)
 				return
 			}
 			if s.Route == nil {
@@ -435,7 +448,7 @@ func (s *SipMsg) parseStartLine(str string) {
 	s.State = sipParseStateStartLine
 	s.StartLine = ParseStartLine(str)
 	if s.StartLine.Error != nil {
-		s.Error = errors.New("parseStartLine err: received err while parsing start line: " + s.StartLine.Error.Error())
+		s.Error = fmt.Errorf("parseStartLine err: received err while parsing start line: %v", s.StartLine.Error)
 	}
 }
 
@@ -461,17 +474,15 @@ func (s *SipMsg) parseUnsupported(str string) {
 }
 
 func (s *SipMsg) parseVia(str string) {
-	v := &Via{Via: str}
-	v.parse()
-	if v.Error != nil {
-		s.Error = v.Error
+	vs := &vias{via: str}
+	vs.parse()
+	if vs.err != nil {
+		s.Error = vs.err
 		return
 	}
-	if s.Via == nil {
-		s.Via = []*Via{v}
-		return
+	for _, v := range vs.vias {
+		s.Via = append(s.Via, v)
 	}
-	s.Via = append(s.Via, v)
 }
 
 func (s *SipMsg) parseWarning(str string) {

@@ -7,6 +7,7 @@ package sipparser
 // Imports from the go standard library
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -34,15 +35,15 @@ var (
 type parseStartLineStateFn func(s *StartLine) parseStartLineStateFn
 
 type StartLine struct {
-	Error    error  "err"
-	Val      string "val"
-	Type     string "type"
-	Method   string "method"
-	URI      *URI   "uri"
-	Resp     string "resp"
-	RespText string "resptext"
-	Proto    string "proto"
-	Version  string "version"
+	Error    error
+	Val      string
+	Type     string
+	Method   string
+	URI      *URI
+	Resp     string
+	RespText string
+	Proto    string
+	Version  string
 }
 
 func (s *StartLine) run() {
@@ -98,7 +99,7 @@ func parseStartLineRequest(s *StartLine) parseStartLineStateFn {
 	s.Method = parts[0]
 	s.URI = ParseURI(parts[1])
 	if s.URI.Error != nil {
-		s.Error = errors.New("parseStartLineRequest err: err in URI: " + s.URI.Error.Error())
+		s.Error = fmt.Errorf("parseStartLineRequest err: err in URI: %v", s.URI.Error)
 		return nil
 	}
 	charPos := strings.IndexRune(parts[2], '/')

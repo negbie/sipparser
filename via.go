@@ -12,6 +12,25 @@ import (
 
 type viaStateFn func(v *Via) viaStateFn
 
+type vias struct {
+	via  string
+	vias []*Via
+	err  error
+}
+
+func (vs *vias) parse() {
+	parts := strings.Split(vs.via, ",")
+	for _, p := range parts {
+		v := &Via{Via: p}
+		v.parse()
+		if v.Error != nil {
+			vs.err = v.Error
+			return
+		}
+		vs.vias = append(vs.vias, v)
+	}
+}
+
 type Via struct {
 	State      string
 	Error      error

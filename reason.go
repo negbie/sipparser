@@ -22,7 +22,7 @@ type Reason struct {
 	Text  string
 }
 
-// addParam is a method for the Reason type that looks at the 
+// addParam is a method for the Reason type that looks at the
 // parameter passed into it
 func (r *Reason) addParam(s string) {
 	np := getParam(s)

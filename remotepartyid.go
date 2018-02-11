@@ -7,6 +7,7 @@ package sipparser
 // Imports from the go standard library
 import (
 	"errors"
+	"fmt"
 )
 
 type parseRpidStateFn func(r *RemotePartyId) parseRpidStateFn
@@ -69,7 +70,7 @@ func parseRpidGetUri(r *RemotePartyId) parseRpidStateFn {
 	if left < right {
 		r.URI = ParseURI(r.Val[left+1 : right])
 		if r.URI.Error != nil {
-			r.Error = errors.New("parseRpidGetUri err: received err getting uri: " + r.URI.Error.Error())
+			r.Error = fmt.Errorf("parseRpidGetUri err: received err getting uri: %v", r.URI.Error)
 			return nil
 		}
 		return parseRpidGetParams

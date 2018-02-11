@@ -11,9 +11,9 @@ import (
 )
 
 type Authorization struct {
-	Val         string   "val"
-	Credentials string   "credentials"
-	Params      []*Param "params"
+	Val         string
+	Credentials string
+	Params      []*Param
 }
 
 func (a *Authorization) GetParam(param string) *Param {

@@ -10,12 +10,12 @@ func TestAuthorization(t *testing.T) {
 	a := &Authorization{Val: val}
 	err := a.parse()
 	if err != nil {
-		t.Errorf("[TestAuthorization] Err parsing authorization hdr.  Received: " + err.Error())
+		t.Errorf("[TestAuthorization] Err parsing authorization hdr.  Received: %v", err)
 	}
 	if a.Credentials != "Digest" {
-		t.Errorf("[TestAuthorization] Err parsing authorization hdr.  Credentials should be \"Digest\" but rcvd: " + a.Credentials)
+		t.Errorf("[TestAuthorization] Err parsing authorization hdr.  Credentials should be \"Digest\" but rcvd: %v", a.Credentials)
 	}
 	if a.GetParam("realm").Val != "FOOBAR" {
-		t.Errorf("[TestAuthorization] Err parsing authorization hdr.  Called a.GetParam(\"realm\") and did not get \"FOOBAR\".  rcvd: " + a.GetParam("realm").Val)
+		t.Errorf("[TestAuthorization] Err parsing authorization hdr.  Called a.GetParam(\"realm\") and did not get \"FOOBAR\".  rcvd: %v", a.GetParam("realm").Val)
 	}
 }

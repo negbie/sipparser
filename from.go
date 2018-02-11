@@ -6,7 +6,7 @@ package sipparser
 
 // Imports from the go standard library
 import (
-	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -14,15 +14,15 @@ type parseFromStateFn func(f *From) parseFromStateFn
 
 // from holds a parsed header that has a format like:
 // "NAME" <sip:user@hostinfo>;param=val
-// and is used for the parsing of the from, to, and 
+// and is used for the parsing of the from, to, and
 // contact header in the parser program
 // From holds the following public fields:
-// -- Error is an os.Error
+// -- Error is an error
 // -- Val is the raw value
 // -- Name is the name value
 // -- Tag is the tag value
 // -- URI is a parsed uri
-// -- Params are for any generic params that are part of 
+// -- Params are for any generic params that are part of
 //    the header
 type From struct {
 	Error      error
@@ -69,7 +69,7 @@ func parseFromGetURI(f *From) parseFromStateFn {
 	if f.brackChk == false {
 		f.URI = ParseURI(f.Val)
 		if f.URI.Error != nil {
-			f.Error = errors.New("parseFromGetURI err: rcvd err parsing uri: " + f.URI.Error.Error())
+			f.Error = fmt.Errorf("parseFromGetURI err: rcvd err parsing uri: %v", f.URI.Error)
 			return nil
 		}
 		if f.URI.UriParams != nil {
@@ -84,7 +84,7 @@ func parseFromGetURI(f *From) parseFromStateFn {
 	if f.brackChk == true {
 		f.URI = ParseURI(f.Val[f.leftBrack+1 : f.rightBrack])
 		if f.URI.Error != nil {
-			f.Error = errors.New("parseFromGetURI err: rcvd err parsing uri: " + f.URI.Error.Error())
+			f.Error = fmt.Errorf("parseFromGetURI err: rcvd err parsing uri: %v", f.URI.Error)
 			return nil
 		}
 		return parseFromGetParams
