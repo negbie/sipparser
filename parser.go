@@ -371,7 +371,7 @@ func (s *SipMsg) parseRTPStat(str string) {
 }
 
 func (s *SipMsg) parseRecordRoute(str string) {
-	cs := getCommaSeperated(str)
+	cs := []string{str}
 	for rt := range cs {
 		left := 0
 		right := 0
