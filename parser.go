@@ -174,7 +174,7 @@ func (s *SipMsg) addHdr(str string) {
 		s.RemotePartyIdVal = s.hdrv
 	case s.hdr == SIP_HDR_ROUTE:
 		s.parseRoute(s.hdrv)
-	case s.hdr == SIP_HDR_P_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT:
+	case s.hdr == SIP_HDR_P_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT_ADD:
 		s.parseRTPStat(s.hdrv)
 	case s.hdr == SIP_HDR_SERVER:
 		s.Server = s.hdrv
@@ -366,8 +366,16 @@ func (s *SipMsg) parseReason(str string) {
 }
 
 func (s *SipMsg) parseRTPStat(str string) {
-	s.RTPStat = &RTPStat{Val: str}
-	s.RTPStat.parse()
+	/*
+		s.RTPStat = &RTPStat{Val: str}
+		s.RTPStat.parse()
+	*/
+
+	if s.RTPStat == nil {
+		s.RTPStat = &RTPStat{Val: str}
+	} else {
+		s.RTPStat.Val += ";" + str
+	}
 }
 
 func (s *SipMsg) parseRecordRoute(str string) {

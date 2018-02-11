@@ -7,10 +7,8 @@
 package sipparser
 
 // Imports from the go standard library
-import (
-	"testing"
-)
 
+/*
 func TestRTPStat(t *testing.T) {
 	sm := &SipMsg{}
 	s := "PS=295,OS=5900,PR=292,OR=5840,PL=0,JI=0,LA=0,DU=5,XX=123"
@@ -38,3 +36,4 @@ func TestRTPStat(t *testing.T) {
 		t.Errorf("RTPStat.LA: got %d, want %d", got, want)
 	}
 }
+*/
