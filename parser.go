@@ -120,9 +120,10 @@ func (s *SipMsg) addHdr(str string) {
 	}
 	s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
 	switch {
-	case len(str)-1 > sp+1:
+	case len(str)-1 >= sp+1:
 		s.hdrv = cleanWs(str[sp+1:])
 	default:
+		s.Error = fmt.Errorf("addHdr err: no valid header: %s", s.hdr)
 		s.hdrv = ""
 	}
 	switch {
@@ -525,7 +526,7 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 		case i == 1:
 			lasth = hdrs[i]
 		case i > 1:
-			if len(hdrs[i]) > 4 {
+			if len(hdrs[i]) > 3 {
 				switch {
 				case hdrs[i][0] == '\t':
 					lasth = lasth + hdrs[i][1:]
@@ -539,7 +540,7 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 					lasth = hdrs[i]
 				}
 			}
-			if len(hdrs[i]) < 4 {
+			if len(hdrs[i]) <= 3 {
 				s.addHdr(lasth)
 				lasth = hdrs[i]
 			}
@@ -550,9 +551,19 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 }
 
 func ParseMsg(str string) (s *SipMsg) {
+	// Since strings.Index returns the index of the first instance of substr,
+	// make sure every SIP msg has the right ending
+	if !strings.HasSuffix(str, "\r\n\r\n") {
+		if strings.HasSuffix(str, "\r\n") {
+			str = str + "\r\n"
+		} else {
+			str = str + "\r\n\r\n"
+		}
+	}
+
 	s = &SipMsg{Msg: str, eof: strings.Index(str, "\r\n\r\n")}
 	if s.eof == -1 {
-		s.Error = errors.New("ParseMsg: err parsing msg.  No SIP eof found.")
+		s.Error = errors.New("ParseMsg: err parsing msg. No SIP eof found.")
 		return s
 	}
 	s.run()
