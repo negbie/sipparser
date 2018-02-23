@@ -40,15 +40,15 @@ func (h *Header) String() string {
 type sipParserStateFn func(s *SipMsg) sipParserStateFn
 
 type SipMsg struct {
-	State              string
-	Error              error
-	Msg                string
-	CallingParty       *CallingPartyInfo
-	Body               string
-	StartLine          *StartLine
-	Headers            []*Header
-	Accept             *Accept
-	AlertInfo          string
+	State        string
+	Error        error
+	Msg          string
+	CallingParty *CallingPartyInfo
+	Body         string
+	StartLine    *StartLine
+	Headers      []*Header
+	Accept       *Accept
+	//AlertInfo          string
 	Allow              []string
 	AllowEvents        []string
 	Authorization      *Authorization
@@ -67,30 +67,31 @@ type SipMsg struct {
 	Cseq               *Cseq
 	Rack               *Rack
 	Reason             *Reason
-	Rseq               string
-	RseqInt            int
-	RecordRoute        []*URI
-	RTPStat            *RTPStat
-	Route              []*URI
-	Via                []*Via
-	Require            []string
-	Supported          []string
-	Privacy            string
-	ProxyAuthenticate  *Authorization
-	ProxyRequire       []string
-	RemotePartyIdVal   string
-	RemotePartyId      *RemotePartyId
-	PAssertedIdVal     string
-	PAssertedId        *PAssertedId
-	Unsupported        []string
-	UserAgent          string
-	Server             string
-	Subject            string
-	Warning            *Warning
-	WWWAuthenticate    *Authorization
-	eof                int
-	hdr                string
-	hdrv               string
+	//Rseq               string
+	//RseqInt            int
+	RecordRoute []*URI
+	RTPStat     *RTPStat
+	Route       []*URI
+	Via         []*Via
+	Require     []string
+	Supported   []string
+	Privacy     string
+	//ProxyAuthenticate  *Authorization
+	//ProxyRequire       []string
+	RemotePartyIdVal string
+	DiversionVal     string
+	RemotePartyId    *RemotePartyId
+	PAssertedIdVal   string
+	PAssertedId      *PAssertedId
+	Unsupported      []string
+	UserAgent        string
+	Server           string
+	//Subject          string
+	Warning         *Warning
+	WWWAuthenticate *Authorization
+	eof             int
+	hdr             string
+	hdrv            string
 }
 
 func (s *SipMsg) run() {
@@ -133,7 +134,7 @@ func (s *SipMsg) addHdr(str string) {
 		s.parseAllow(s.hdrv)
 	case s.hdr == SIP_HDR_ALLOW_EVENTS || s.hdr == SIP_HDR_ALLOW_EVENTS_CMP:
 		s.parseAllowEvents(s.hdrv)
-	case s.hdr == SIP_HDR_AUTHORIZATION:
+	case s.hdr == SIP_HDR_AUTHORIZATION || s.hdr == SIP_HDR_PROXY_AUTHORIZATION:
 		s.parseAuthorization(s.hdrv)
 	case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
 		s.CallId = s.hdrv
@@ -163,8 +164,8 @@ func (s *SipMsg) addHdr(str string) {
 		s.PAssertedIdVal = s.hdrv
 	case s.hdr == SIP_HDR_PRIVACY:
 		s.Privacy = s.hdrv
-	case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
-		s.parseProxyAuthenticate(s.hdrv)
+	//case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
+	//	s.parseProxyAuthenticate(s.hdrv)
 	case s.hdr == SIP_HDR_RACK:
 		s.parseRack(s.hdrv)
 	case s.hdr == SIP_HDR_REASON:
@@ -173,6 +174,8 @@ func (s *SipMsg) addHdr(str string) {
 		s.parseRecordRoute(s.hdrv)
 	case s.hdr == SIP_HDR_REMOTE_PARTY_ID:
 		s.RemotePartyIdVal = s.hdrv
+	case s.hdr == SIP_HDR_DIVERSION:
+		s.DiversionVal = s.hdrv
 	case s.hdr == SIP_HDR_ROUTE:
 		s.parseRoute(s.hdrv)
 	case s.hdr == SIP_HDR_P_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT_ADD:
@@ -351,10 +354,10 @@ func (s *SipMsg) ParsePAssertedId(str string) {
 	s.parsePAssertedId(str)
 }
 
-func (s *SipMsg) parseProxyAuthenticate(str string) {
+/* func (s *SipMsg) parseProxyAuthenticate(str string) {
 	s.ProxyAuthenticate = &Authorization{Val: str}
 	s.Error = s.ProxyAuthenticate.parse()
-}
+} */
 
 func (s *SipMsg) parseRack(str string) {
 	s.Rack = &Rack{Val: str}

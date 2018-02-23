@@ -13,6 +13,7 @@ import (
 type Authorization struct {
 	Val         string
 	Credentials string
+	Username    string
 	Params      []*Param
 }
 
@@ -41,6 +42,9 @@ func (a *Authorization) parse() error {
 	parts := strings.Split(a.Val[pos+1:], ",")
 	for i := range parts {
 		a.Params = append(a.Params, getParam(strings.Replace(parts[i], "\"", "", -1)))
+	}
+	if a.GetParam("username") != nil {
+		a.Username = a.GetParam("username").Val
 	}
 	return nil
 }

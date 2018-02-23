@@ -31,7 +31,7 @@ func (r *RemotePartyId) addParam(s string) {
 	case p.Param == "party":
 		r.Party = p.Val
 	case p.Param == "privacy":
-		r.Party = p.Val
+		r.Privacy = p.Val
 	default:
 		switch {
 		case r.Params == nil:

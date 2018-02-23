@@ -25,10 +25,10 @@ const (
 	SIP_METHOD_REFER     = "REFER"
 	SIP_METHOD_PUBLISH   = "PUBLISH"
 	// SIP Headers
-	SIP_HDR_ACCEPT                        = "accept"          // RFC3261
-	SIP_HDR_ACCEPT_CONTACT                = "accept-contact"  // RFC3841
-	SIP_HDR_ACCEPT_CONTACT_CMP            = "a"               // RFC3841
-	SIP_HDR_ACCEPT_ENCODING               = "accept-encoding" //
+	SIP_HDR_ACCEPT                        = "accept"         // RFC3261
+	SIP_HDR_ACCEPT_CONTACT                = "accept-contact" // RFC3841
+	SIP_HDR_ACCEPT_CONTACT_CMP            = "a"              // RFC3841
+	SIP_HDR_ACCEPT_ENCODING               = "accept-encoding"
 	SIP_HDR_ACCEPT_LANGUAGE               = "accept-language"
 	SIP_HDR_ACCEPT_RESOURCE_PRIORITY      = "accept-resource-priority" // RFC4412
 	SIP_HDR_ALERT_INFO                    = "alert-info"
@@ -59,7 +59,7 @@ const (
 	SIP_HDR_FLOW_TIMER                    = "flow-timer"
 	SIP_HDR_FROM                          = "from"
 	SIP_HDR_FROM_CMP                      = "f"
-	SIP_HDR_HISTORY_INFO                  = "history-info"  // from RFC 4244
+	SIP_HDR_HISTORY_INFO                  = "history-info"  // RFC 4244
 	SIP_HDR_IDENTITY                      = "identity"      // RFC 4474
 	SIP_HDR_IDENTITY_CMP                  = "y"             // RFC 4474
 	SIP_HDR_IDENTITY_INFO                 = "identity-info" // RFC 4474
@@ -77,7 +77,7 @@ const (
 	SIP_HDR_PRIVACY                       = "privacy"
 	SIP_HDR_PRIV_ANSWER_MODE              = "priv-answer-mode" // RFC 5373
 	SIP_HDR_PROXY_AUTHENTICATE            = "proxy-authenticate"
-	SIP_HDR_PROXY_AutHORIZATION           = "proxy-authorization"
+	SIP_HDR_PROXY_AUTHORIZATION           = "proxy-authorization"
 	SIP_HDR_PROXY_REQUIRE                 = "proxy-require"
 	SIP_HDR_RACK                          = "rack" // RFC 3262
 	SIP_HDR_REASON                        = "reason"
@@ -89,6 +89,7 @@ const (
 	SIP_HDR_REJECT_CONTACT                = "reject-contact"                // RFC3841
 	SIP_HDR_REJECT_CONTACT_CMP            = "j"                             // RFC3841
 	SIP_HDR_REMOTE_PARTY_ID               = "remote-party-id"               // DRAFT
+	SIP_HDR_DIVERSION                     = "diversion"                     // RFC3261
 	SIP_HDR_REPLACES                      = "replaces"                      // RFC3891
 	SIP_HDR_REPLY_TO                      = "reply-to"                      // RFC3261
 	SIP_HDR_REQUEST_DISPOSITION           = "request-disposition"           // RFC3841

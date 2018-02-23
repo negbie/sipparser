@@ -20,6 +20,9 @@ func TestRpid(t *testing.T) {
 		t.Error("[TestRpid] Error parsing rpid hdr: \"Unknown\" <sip:5558887777@0.0.0.0>;party=calling;screen=yes;privacy=off.  Name should be \"Unknown\".")
 	}
 	if sm.RemotePartyId.URI == nil {
-		t.Error("[TestRpid Error parsing rpid hdr: \"Unknown\" <sip:5558887777@0.0.0.0>;party=calling;screen=yes;privacy=off.  sm.RemotePartyId.URI is nil.")
+		t.Error("[TestRpid] Error parsing rpid hdr: \"Unknown\" <sip:5558887777@0.0.0.0>;party=calling;screen=yes;privacy=off.  sm.RemotePartyId.URI is nil.")
+	}
+	if sm.RemotePartyId.Privacy != "off" {
+		t.Error("[TestRpid] Error parsing rpid hdr: \"Unknown\" <sip:5558887777@0.0.0.0>;party=calling;screen=yes;privacy=off.  Privacy should be \"off\".")
 	}
 }
