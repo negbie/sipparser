@@ -129,11 +129,11 @@ func (s *SipMsg) addHdr(str string) {
 	}
 	switch {
 	case s.hdr == SIP_HDR_ACCEPT:
-		s.parseAccept(s.hdrv)
+		//s.parseAccept(s.hdrv)
 	case s.hdr == SIP_HDR_ALLOW:
-		s.parseAllow(s.hdrv)
+		//s.parseAllow(s.hdrv)
 	case s.hdr == SIP_HDR_ALLOW_EVENTS || s.hdr == SIP_HDR_ALLOW_EVENTS_CMP:
-		s.parseAllowEvents(s.hdrv)
+		//s.parseAllowEvents(s.hdrv)
 	case s.hdr == SIP_HDR_AUTHORIZATION || s.hdr == SIP_HDR_PROXY_AUTHORIZATION:
 		s.parseAuthorization(s.hdrv)
 	case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
@@ -164,36 +164,36 @@ func (s *SipMsg) addHdr(str string) {
 		s.PAssertedIdVal = s.hdrv
 	case s.hdr == SIP_HDR_PRIVACY:
 		s.Privacy = s.hdrv
-	//case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
-	//	s.parseProxyAuthenticate(s.hdrv)
+	case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
+		//s.parseProxyAuthenticate(s.hdrv)
 	case s.hdr == SIP_HDR_RACK:
-		s.parseRack(s.hdrv)
+		//s.parseRack(s.hdrv)
 	case s.hdr == SIP_HDR_REASON:
 		s.parseReason(s.hdrv)
 	case s.hdr == SIP_HDR_RECORD_ROUTE:
-		s.parseRecordRoute(s.hdrv)
+		//s.parseRecordRoute(s.hdrv)
 	case s.hdr == SIP_HDR_REMOTE_PARTY_ID:
 		s.RemotePartyIdVal = s.hdrv
 	case s.hdr == SIP_HDR_DIVERSION:
 		s.DiversionVal = s.hdrv
 	case s.hdr == SIP_HDR_ROUTE:
-		s.parseRoute(s.hdrv)
+		//s.parseRoute(s.hdrv)
 	case s.hdr == SIP_HDR_P_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT_ADD:
 		s.parseRTPStat(s.hdrv)
 	case s.hdr == SIP_HDR_SERVER:
 		s.Server = s.hdrv
 	case s.hdr == SIP_HDR_SUPPORTED:
-		s.parseSupported(s.hdrv)
+		//s.parseSupported(s.hdrv)
 	case s.hdr == SIP_HDR_TO || s.hdr == SIP_HDR_TO_CMP:
 		s.parseTo(s.hdrv)
 	case s.hdr == SIP_HDR_UNSUPPORTED:
-		s.parseUnsupported(s.hdrv)
+		//s.parseUnsupported(s.hdrv)
 	case s.hdr == SIP_HDR_USER_AGENT:
 		s.UserAgent = s.hdrv
 	case s.hdr == SIP_HDR_VIA || s.hdr == SIP_HDR_VIA_CMP:
 		s.parseVia(s.hdrv)
 	case s.hdr == SIP_HDR_WARNING:
-		s.parseWarning(s.hdrv)
+		//s.parseWarning(s.hdrv)
 	case s.hdr == SIP_HDR_WWW_AUTHENTICATE:
 		s.parseWWWAuthenticate(s.hdrv)
 	default:
@@ -354,10 +354,10 @@ func (s *SipMsg) ParsePAssertedId(str string) {
 	s.parsePAssertedId(str)
 }
 
-/* func (s *SipMsg) parseProxyAuthenticate(str string) {
-	s.ProxyAuthenticate = &Authorization{Val: str}
-	s.Error = s.ProxyAuthenticate.parse()
-} */
+func (s *SipMsg) parseProxyAuthenticate(str string) {
+	//s.ProxyAuthenticate = &Authorization{Val: str}
+	//s.Error = s.ProxyAuthenticate.parse()
+}
 
 func (s *SipMsg) parseRack(str string) {
 	s.Rack = &Rack{Val: str}

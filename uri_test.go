@@ -22,6 +22,9 @@ func TestUri(t *testing.T) {
 		t.Errorf("[TestUri] Error parsing URI \"sip:15555551000@0.0.0.0:5060;user=phone\".  Host value should be \"0.0.0.0\" but received: " + u.Host)
 	}
 	if u.Port != "5060" {
+		t.Errorf("[TestUri] Error parsing URI \"sip:15555551000@0.0.0.0:5060;user=phone\". Port value should be '5060' ... but it is not.")
+	}
+	if u.PortInt != 5060 {
 		t.Errorf("[TestUri] Error parsing URI \"sip:15555551000@0.0.0.0:5060;user=phone\". Port value should be 5060 ... but it is not.")
 	}
 	s = "tel:5554448000@myfoo.com"

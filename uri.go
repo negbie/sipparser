@@ -6,6 +6,8 @@ package sipparser
 
 // Imports from the go standard library
 import (
+	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -44,6 +46,7 @@ type URI struct {
 	HostInfo     string // this is everything after the @ or the entire uri
 	Host         string // the host in the uri
 	Port         string // the port
+	PortInt      int
 	UriParams    []*Param
 	Secure       bool // Indicates SIP-URI or SIPS-URI (true for SIPS-URI)
 	atPos        int
@@ -187,6 +190,10 @@ func parseUriHost(u *URI) uriStateFn {
 			if i != len(u.Raw[u.atPos+1:u.atPos+firstSemi]) {
 				if u.Raw[u.atPos+1 : u.atPos+firstSemi][i] == ':' {
 					u.Port = cleanWs(u.Raw[u.atPos+1 : u.atPos+firstSemi][i+1:])
+					u.PortInt, u.Error = strconv.Atoi(u.Port)
+					if u.Error != nil {
+						u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
+					}
 					colon = i
 				}
 				if colon != 0 {
@@ -215,6 +222,10 @@ func parseUriHost(u *URI) uriStateFn {
 			if i != len(u.Raw[u.atPos+1:]) {
 				if u.Raw[u.atPos+1:][i] == ':' {
 					u.Port = cleanWs(u.Raw[u.atPos+1:][i+1:])
+					u.PortInt, u.Error = strconv.Atoi(u.Port)
+					if u.Error != nil {
+						u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
+					}
 					colon = i
 				}
 				if colon != 0 {
