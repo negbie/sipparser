@@ -70,12 +70,13 @@ type SipMsg struct {
 	//Rseq               string
 	//RseqInt            int
 	RecordRoute []*URI
-	RTPStat     *RTPStat
-	Route       []*URI
-	Via         []*Via
-	Require     []string
-	Supported   []string
-	Privacy     string
+	//RTPStat     *RTPStat
+	RTPStatVal string
+	Route      []*URI
+	Via        []*Via
+	Require    []string
+	Supported  []string
+	Privacy    string
 	//ProxyAuthenticate  *Authorization
 	//ProxyRequire       []string
 	RemotePartyIdVal string
@@ -178,7 +179,7 @@ func (s *SipMsg) addHdr(str string) {
 		s.DiversionVal = s.hdrv
 	case s.hdr == SIP_HDR_ROUTE:
 		//s.parseRoute(s.hdrv)
-	case s.hdr == SIP_HDR_P_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT || s.hdr == SIP_HDR_X_RTP_STAT_ADD:
+	case s.hdr == SIP_HDR_X_RTP_STAT:
 		s.parseRTPStat(s.hdrv)
 	case s.hdr == SIP_HDR_SERVER:
 		s.Server = s.hdrv
@@ -370,16 +371,9 @@ func (s *SipMsg) parseReason(str string) {
 }
 
 func (s *SipMsg) parseRTPStat(str string) {
-	/*
-		s.RTPStat = &RTPStat{Val: str}
-		s.RTPStat.parse()
-	*/
-
-	if s.RTPStat == nil {
-		s.RTPStat = &RTPStat{Val: str}
-	} else {
-		s.RTPStat.Val += ";" + str
-	}
+	//s.RTPStat = &RTPStat{Val: str}
+	//s.RTPStat.parse()
+	s.RTPStatVal = str
 }
 
 func (s *SipMsg) parseRecordRoute(str string) {

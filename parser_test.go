@@ -54,12 +54,12 @@ func TestParseMsg(t *testing.T) {
 	/* 	if len(s.Supported) != 5 {
 		t.Error("[TestParseMsg] Error parsing msg.  s.Support should have length of 5.")
 	} */
-	x := "CS=0;PS=1433;ES=1525;OS=229280;SP=0/0;SO=0;QS=-;PR=1522;ER=1525;OR=243520;CR=0;SR=0;QR=-;PL=0,0;BL=0;LS=0;RB=0/0;SB=-/-;EN=PCMA,FAX;DE=PCMA;JI=23,2;DL=20,20,21;IP=83.138.49.179:7082,102.183.157.163:25132;DQ=31;DSS=0;DS=0;PLCS=288;JS=1"
-	if s.RTPStat == nil {
-		t.Error("[TestParseMsg] Error parsing msg.  s.RTPStat: got nil, want non-nil.")
-	} else if s.RTPStat.Val != x {
-		t.Errorf("[TestParseMsg] Error parsing msg.  s.RTPStat.PS: got %s, want %s", s.RTPStat.Val, x)
-	}
+	/* 	x := "CS=0;PS=1433;ES=1525;OS=229280;SP=0/0;SO=0;QS=-;PR=1522;ER=1525;OR=243520;CR=0;SR=0;QR=-;PL=0,0;BL=0;LS=0;RB=0/0;SB=-/-;EN=PCMA,FAX;DE=PCMA;JI=23,2;DL=20,20,21;IP=83.138.49.179:7082,102.183.157.163:25132;DQ=31;DSS=0;DS=0;PLCS=288;JS=1"
+	   	if s.RTPStat == nil {
+	   		t.Error("[TestParseMsg] Error parsing msg.  s.RTPStat: got nil, want non-nil.")
+	   	} else if s.RTPStat.Val != x {
+	   		t.Errorf("[TestParseMsg] Error parsing msg.  s.RTPStat.PS: got %s, want %s", s.RTPStat.Val, x)
+	   	} */
 	m = "OPTIONS sip:22729788837@sip.netcologne.de SIP/2.0\r\nv:SIP/2.0/UDP 11.23.142.14:5086;rport;branch=z9hG4bKDrrK0aZayHU5m\r\nf:<sip:1288837@sip.test.de>;tag=SBKrNFysdfp5t9BN\r\nt:<sip:422788837@sip.test.de>\r\ni:OvwBVivTMK19kN3Ws51_Dv\r\nCSeq:688171 OPTIONS\r\nAccept:application/vnd.nokia-register-usage\r\ns:REGISTRATION PROBE\r\nl:1\r\n\r\n"
 	s = ParseMsg(m)
 
