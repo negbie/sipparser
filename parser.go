@@ -141,6 +141,7 @@ func (s *SipMsg) addHdr(str string) {
 		s.CallId = s.hdrv
 	case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
 		s.ContactVal = s.hdrv
+		s.parseContact(str)
 	case s.hdr == SIP_HDR_CONTENT_DISPOSITION:
 		s.parseContentDisposition(s.hdrv)
 	case s.hdr == SIP_HDR_CONTENT_LENGTH || s.hdr == SIP_HDR_CONTENT_LENGTH_CMP:
