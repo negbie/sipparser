@@ -190,9 +190,11 @@ func parseUriHost(u *URI) uriStateFn {
 			if i != len(u.Raw[u.atPos+1:u.atPos+firstSemi]) {
 				if u.Raw[u.atPos+1 : u.atPos+firstSemi][i] == ':' {
 					u.Port = cleanWs(u.Raw[u.atPos+1 : u.atPos+firstSemi][i+1:])
-					u.PortInt, u.Error = strconv.Atoi(u.Port)
-					if u.Error != nil {
-						u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
+					if len(u.Port) >= 2 {
+						u.PortInt, u.Error = strconv.Atoi(u.Port)
+						if u.Error != nil {
+							u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
+						}
 					}
 					colon = i
 				}
@@ -222,9 +224,11 @@ func parseUriHost(u *URI) uriStateFn {
 			if i != len(u.Raw[u.atPos+1:]) {
 				if u.Raw[u.atPos+1:][i] == ':' {
 					u.Port = cleanWs(u.Raw[u.atPos+1:][i+1:])
-					u.PortInt, u.Error = strconv.Atoi(u.Port)
-					if u.Error != nil {
-						u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
+					if len(u.Port) >= 2 {
+						u.PortInt, u.Error = strconv.Atoi(u.Port)
+						if u.Error != nil {
+							u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
+						}
 					}
 					colon = i
 				}
