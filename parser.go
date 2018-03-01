@@ -549,15 +549,15 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 }
 
 func ParseMsg(str string) (s *SipMsg) {
-	// Since strings.Index returns the index of the first instance of substr,
-	// make sure every SIP msg has the right ending
-	if !strings.HasSuffix(str, "\r\n\r\n") {
-		if strings.HasSuffix(str, "\r\n") {
-			str = str + "\r\n"
-		} else {
-			str = str + "\r\n\r\n"
-		}
-	}
+	/* 	// Since strings.Index returns the index of the first instance of substr,
+	   	// make sure every SIP msg has the right ending
+	   	if !strings.HasSuffix(str, "\r\n\r\n") {
+	   		if strings.HasSuffix(str, "\r\n") {
+	   			str = str + "\r\n"
+	   		} else {
+	   			str = str + "\r\n\r\n"
+	   		}
+	   	} */
 
 	s = &SipMsg{Msg: str, eof: strings.Index(str, "\r\n\r\n")}
 	if s.eof == -1 {

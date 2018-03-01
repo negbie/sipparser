@@ -6,7 +6,6 @@ package sipparser
 
 // Imports from the go standard library
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -191,10 +190,7 @@ func parseUriHost(u *URI) uriStateFn {
 				if u.Raw[u.atPos+1 : u.atPos+firstSemi][i] == ':' {
 					u.Port = cleanWs(u.Raw[u.atPos+1 : u.atPos+firstSemi][i+1:])
 					if len(u.Port) >= 2 {
-						u.PortInt, u.Error = strconv.Atoi(u.Port)
-						if u.Error != nil {
-							u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
-						}
+						u.PortInt, _ = strconv.Atoi(u.Port)
 					}
 					colon = i
 				}
@@ -225,10 +221,7 @@ func parseUriHost(u *URI) uriStateFn {
 				if u.Raw[u.atPos+1:][i] == ':' {
 					u.Port = cleanWs(u.Raw[u.atPos+1:][i+1:])
 					if len(u.Port) >= 2 {
-						u.PortInt, u.Error = strconv.Atoi(u.Port)
-						if u.Error != nil {
-							u.Error = fmt.Errorf("could not convert port %s to int", u.Port)
-						}
+						u.PortInt, _ = strconv.Atoi(u.Port)
 					}
 					colon = i
 				}
