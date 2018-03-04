@@ -48,9 +48,9 @@ func TestParseMsg(t *testing.T) {
 	if s.ContentLength != "239" {
 		t.Errorf("[TestParseMsg] Error parsing msg.  Content length should be 239.  Received: %s", s.ContentLength)
 	}
-	if s.ContentLengthInt != 239 {
+	/* 	if s.ContentLengthInt != 239 {
 		t.Errorf("[TestParseMsg] Error parsing msg.  ContentLengthInt should be 239.  Received: %d", s.ContentLengthInt)
-	}
+	} */
 	/* 	if len(s.Supported) != 5 {
 		t.Error("[TestParseMsg] Error parsing msg.  s.Support should have length of 5.")
 	} */
@@ -76,9 +76,9 @@ func TestParseMsg(t *testing.T) {
 	if s.ContentLength != "1" {
 		t.Errorf("[TestParseMsg] Error parsing msg.  Content length should be '1'.  Received: %s", s.ContentLength)
 	}
-	if s.ContentLengthInt != 1 {
+	/* 	if s.ContentLengthInt != 1 {
 		t.Errorf("[TestParseMsg] Error parsing msg.  ContentLengthInt should be 1.  Received: %d", s.ContentLengthInt)
-	}
+	} */
 }
 
 // testing the GetCallingParty functionality

@@ -5,11 +5,8 @@
 package sipparser
 
 // Imports from the go standard library
-import (
-	"testing"
-)
 
-func TestContentDisposition(t *testing.T) {
+/* func TestContentDisposition(t *testing.T) {
 	sm := &SipMsg{}
 	s := "session; handling=required"
 	sm.parseContentDisposition(s)
@@ -29,3 +26,4 @@ func TestContentDisposition(t *testing.T) {
 		t.Errorf("[TestContentDisposition] Error parsing content-disposition hdr: session; handling=required.  sm.ContentDisposition.Params[0].Val should be \"required\" but received: \"%s\"", sm.ContentDisposition.Params[0].Val)
 	}
 }
+*/

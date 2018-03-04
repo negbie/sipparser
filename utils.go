@@ -13,6 +13,13 @@ func cleanWs(s string) (ns string) {
 	if s == "" {
 		return ""
 	}
+	return strings.TrimSpace(s)
+}
+
+func cleanWsOld(s string) (ns string) {
+	if s == "" {
+		return ""
+	}
 	v := strings.Split(strings.TrimSpace(s), " ")
 	if len(v) == 1 {
 		return v[0]

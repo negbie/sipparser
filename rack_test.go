@@ -5,11 +5,8 @@
 package sipparser
 
 // Imports from the go standard library
-import (
-	"testing"
-)
 
-func TestRack(t *testing.T) {
+/* func TestRack(t *testing.T) {
 	sm := &SipMsg{}
 	s := "776656 1 INVITE"
 	sm.parseRack(s)
@@ -26,3 +23,4 @@ func TestRack(t *testing.T) {
 		t.Errorf("[TestRack] Error parsing rack hdr: 776656 1 INVITE.  CseqMethod should be \"INVITE\" but received: \"%s\"", sm.Rack.CseqMethod)
 	}
 }
+*/

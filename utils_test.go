@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestCleanWs(t *testing.T) {
+/* func TestCleanWs(t *testing.T) {
 	s := "   white  space    .. "
 	if cleanWs(s) != "white space .." {
 		t.Errorf("[TestCleanWs] Error from cleanWs.  Got unexpected result.")
@@ -17,7 +17,7 @@ func TestCleanWs(t *testing.T) {
 	if cleanWs(s) != "white space" {
 		t.Errorf("[TestCleanWs] Error from cleanWs.  Got unexpected result.")
 	}
-}
+} */
 
 func TestCleanBrack(t *testing.T) {
 	s := "<sip:foo@bar.com>"
