@@ -22,7 +22,7 @@ type Cseq struct {
 
 func (c *Cseq) parse() error {
 	if c.Val == "" {
-		return errors.New("Cseq.parse err: val can not be blank.")
+		return errors.New("Cseq.parse err: val can not be blank")
 	}
 	s := strings.IndexRune(c.Val, ' ')
 	if s == -1 {

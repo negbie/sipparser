@@ -84,12 +84,12 @@ func parseViaState(v *Via) viaStateFn {
 func parseViaGetProto(v *Via) viaStateFn {
 	v.protoEnd = strings.Index(v.Via, " ")
 	if v.protoEnd == -1 {
-		v.Error = errors.New("parseViaGetProto err: could not get LWS char.")
+		v.Error = errors.New("parseViaGetProto err: could not get LWS char")
 		return nil
 	}
 	protoParts := strings.SplitN(v.Via[0:v.protoEnd], "/", 3)
 	if len(protoParts) != 3 {
-		v.Error = errors.New("parseViaGetProto err: split err on proto char.")
+		v.Error = errors.New("parseViaGetProto err: split err on proto char")
 		return nil
 	}
 	v.Proto = protoParts[0]
@@ -121,7 +121,7 @@ func parseViaGetParams(v *Via) viaStateFn {
 
 func parseViaGetHostPort(v *Via) viaStateFn {
 	if v.protoEnd == 0 {
-		v.Error = errors.New("parseViaGetHostPort err: protoEnd is 0.")
+		v.Error = errors.New("parseViaGetHostPort err: protoEnd is 0")
 		return nil
 	}
 	if v.protoEnd < v.paramStart {

@@ -32,7 +32,7 @@ func (r *Rack) parse() error {
 		}
 	}
 	if len(pos) != 2 {
-		return errors.New("Rack.parse err: could not locate two LWS.")
+		return errors.New("Rack.parse err: could not locate two LWS")
 	}
 	r.RseqVal = r.Val[0:pos[0]]
 	r.CseqVal = r.Val[pos[0]+1 : pos[1]]
@@ -40,5 +40,5 @@ func (r *Rack) parse() error {
 		r.CseqMethod = r.Val[pos[1]+1:]
 		return nil
 	}
-	return errors.New("Rack.parse err: value of RAck ends in LWS.")
+	return errors.New("Rack.parse err: value of rack ends in LWS")
 }

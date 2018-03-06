@@ -22,7 +22,7 @@ type Warning struct {
 func (w *Warning) parse() error {
 	parts := strings.SplitN(w.Val, " ", 3)
 	if got, want := len(parts), 3; got != want {
-		return fmt.Errorf("Warning.parse err: split on LWS returned %d fields, want %d.", got, want)
+		return fmt.Errorf("Warning.parse err: split on LWS returned %d fields, want %d", got, want)
 	}
 	c, err := strconv.Atoi(parts[0])
 	if err != nil || c < 0 || c > 999 {

@@ -75,7 +75,7 @@ func parseDivGetUri(d *Diversion) parseDivStateFn {
 		}
 		return parseDivGetParams
 	}
-	d.Error = errors.New("parseDivGetUri err: could not locate bracks.  no uri found.")
+	d.Error = errors.New("parseDivGetUri err: could not locate bracks in uri")
 	return nil
 }
 

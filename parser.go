@@ -232,10 +232,10 @@ func (s *SipMsg) GetCallingParty(str string) error {
 
 func (s *SipMsg) getCallingPartyDefault() error {
 	if s.From == nil {
-		return errors.New("getCallingPartyDefault err: no from header found.")
+		return errors.New("getCallingPartyDefault err: no from header found")
 	}
 	if s.From.URI == nil {
-		return errors.New("getCallingPartyDefault err: no uri found in from header.")
+		return errors.New("getCallingPartyDefault err: no uri found in from header")
 	}
 	s.CallingParty = &CallingPartyInfo{Name: s.From.Name, Number: s.From.URI.User}
 	return nil
@@ -251,13 +251,13 @@ func (s *SipMsg) getCallingPartyPaid() error {
 			return s.Error
 		}
 		if s.PAssertedId.URI == nil {
-			return errors.New("getCallingPartyPaid err: p-asserted-id uri is nil.")
+			return errors.New("getCallingPartyPaid err: p-asserted-id uri is nil")
 		}
 		s.CallingParty = &CallingPartyInfo{Name: s.PAssertedId.Name, Number: s.PAssertedId.URI.User}
 		return nil
 	}
 	if s.PAssertedId.URI == nil {
-		return errors.New("getCallingPartyPaid err: p-asserted-id uri is nil.")
+		return errors.New("getCallingPartyPaid err: p-asserted-id uri is nil")
 	}
 	s.CallingParty = &CallingPartyInfo{Name: s.PAssertedId.Name, Number: s.PAssertedId.URI.User}
 	return nil
@@ -273,13 +273,13 @@ func (s *SipMsg) getCallingPartyRpid() error {
 			return s.Error
 		}
 		if s.RemotePartyId.URI == nil {
-			return errors.New("getCallingPartyRpid err: remote party id uri is nil.")
+			return errors.New("getCallingPartyRpid err: remote party id uri is nil")
 		}
 		s.CallingParty = &CallingPartyInfo{Name: s.RemotePartyId.Name, Number: s.RemotePartyId.URI.User}
 		return nil
 	}
 	if s.RemotePartyId.URI == nil {
-		return errors.New("getCallingPartyRpid err: remote party id uri is nil.")
+		return errors.New("getCallingPartyRpid err: remote party id uri is nil")
 	}
 	s.CallingParty = &CallingPartyInfo{Name: s.RemotePartyId.Name, Number: s.RemotePartyId.URI.User}
 	return nil
@@ -554,7 +554,7 @@ func ParseMsg(str string) (s *SipMsg) {
 
 	s = &SipMsg{Msg: str, eof: strings.Index(str, "\r\n\r\n")}
 	if s.eof == -1 {
-		s.Error = errors.New("ParseMsg: err parsing msg. No SIP eof found.")
+		s.Error = errors.New("ParseMsg: err parsing msg no SIP eof found")
 		return s
 	}
 	s.run()

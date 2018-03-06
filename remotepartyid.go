@@ -75,7 +75,7 @@ func parseRpidGetUri(r *RemotePartyId) parseRpidStateFn {
 		}
 		return parseRpidGetParams
 	}
-	r.Error = errors.New("parseRpidGetUri err: could not locate bracks.  no uri found.")
+	r.Error = errors.New("parseRpidGetUri err: could not locate bracks in uri")
 	return nil
 }
 

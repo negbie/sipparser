@@ -107,8 +107,8 @@ func parseUriGetScheme(u *URI) uriStateFn {
 			return parseUriGetAt
 		}
 		if sLen > 5 && u.Raw[0:5] == "sips:" {
-			u.Scheme = SIPS_SCHEME
 			u.Raw = u.Raw[5:]
+			u.Scheme = SIPS_SCHEME
 			return parseUriGetAt
 		}
 	default:

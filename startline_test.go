@@ -22,6 +22,11 @@ func TestStartLine(t *testing.T) {
 	if s.RespText != "Request Cancelled" {
 		t.Error("[TestStartLine] Error parsing startline: SIP/2.0 487 Request Cancelled.  s.RespText should be \"Request Cancelled\".")
 	}
+	str = "1412@34922@336312786@1.2.3.4:5061;transport=tcp;user=phone@home1.2.3.4                                            111111111"
+	s = ParseStartLine(str)
+	if s.Error == nil {
+		t.Error("[TestStartLine] Error parsing startline.  s.Error should not be nil.")
+	}
 	str = "dlskmgkfmdg ldf,l,"
 	s = ParseStartLine(str)
 	if s.Error == nil {

@@ -72,7 +72,7 @@ func parsePAssertedIdGetUri(p *PAssertedId) pAssertedIdStateFn {
 		}
 		return parsePAssertedIdGetParams
 	}
-	p.Error = errors.New("parseRpidGetUri err: could not locate bracks.  no uri found.")
+	p.Error = errors.New("parseRpidGetUri err: could not locate bracks in uri")
 	return nil
 }
 

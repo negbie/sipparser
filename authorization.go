@@ -32,11 +32,11 @@ func (a *Authorization) GetParam(param string) *Param {
 func (a *Authorization) parse() error {
 	pos := strings.IndexRune(a.Val, ' ')
 	if pos == -1 {
-		return errors.New("Authorization.parse err: no LWS found.")
+		return errors.New("Authorization.parse err: no LWS found")
 	}
 	a.Credentials = a.Val[0:pos]
 	if len(a.Val)-1 <= pos {
-		return errors.New("Authorization.parse err: no digest-resp found.")
+		return errors.New("Authorization.parse err: no digest-resp found")
 	}
 	a.Params = make([]*Param, 0)
 	parts := strings.Split(a.Val[pos+1:], ",")

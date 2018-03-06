@@ -57,7 +57,7 @@ func parseStartLine(s *StartLine) parseStartLineStateFn {
 		return nil
 	}
 	if len(s.Val) < 3 {
-		s.Error = errors.New("parseStartLine err: length of s.Val is less than 3. Invalid start line.")
+		s.Error = errors.New("parseStartLine err: length of s.Val is less than 3. Invalid start line")
 		return nil
 	}
 	if s.Val[0:3] == "SIP" {
@@ -71,17 +71,17 @@ func parseStartLine(s *StartLine) parseStartLineStateFn {
 func parseStartLineResponse(s *StartLine) parseStartLineStateFn {
 	parts := strings.SplitN(s.Val, " ", 3)
 	if len(parts) != 3 {
-		s.Error = errors.New("parseStartLineRespone err: err getting parts from LWS.")
+		s.Error = errors.New("parseStartLineRespone err: err getting parts from LWS")
 		return nil
 	}
 	charPos := strings.IndexRune(parts[0], '/')
 	if charPos == -1 {
-		s.Error = errors.New("parseStartLineRespone err: err getting proto char.")
+		s.Error = errors.New("parseStartLineRespone err: err getting proto char")
 		return nil
 	}
 	s.Proto = parts[0][0:charPos]
 	if len(parts[0])-1 < charPos+1 {
-		s.Error = errors.New("parseStartLineResponse err: proto char appears to be at end of proto.")
+		s.Error = errors.New("parseStartLineResponse err: proto char appears to be at end of proto")
 		return nil
 	}
 	s.Version = parts[0][charPos+1:]
@@ -93,7 +93,10 @@ func parseStartLineResponse(s *StartLine) parseStartLineStateFn {
 func parseStartLineRequest(s *StartLine) parseStartLineStateFn {
 	parts := strings.SplitN(s.Val, " ", 3)
 	if len(parts) != 3 {
-		s.Error = errors.New("parseStartLineRequest err: request line did split on LWS correctly.")
+		s.Error = errors.New("parseStartLineRequest err: request line did not split on LWS correctly")
+		return nil
+	} else if len(parts[1]) == 0 {
+		s.Error = errors.New("parseStartLineRequest err: empty request uri part")
 		return nil
 	}
 	s.Method = parts[0]
@@ -104,11 +107,11 @@ func parseStartLineRequest(s *StartLine) parseStartLineStateFn {
 	}
 	charPos := strings.IndexRune(parts[2], '/')
 	if charPos == -1 {
-		s.Error = errors.New("parseStartLineRequest err: could not get \"/\" pos in parts[2].")
+		s.Error = errors.New("parseStartLineRequest err: could not get \"/\" pos in parts[2]")
 		return nil
 	}
 	if len(parts[2])-1 < charPos+1 {
-		s.Error = errors.New("parseStartLineRequest err: \"/\" char appears to be at end of line.")
+		s.Error = errors.New("parseStartLineRequest err: \"/\" char appears to be at end of line")
 		return nil
 	}
 	s.Proto = parts[2][0:charPos]
