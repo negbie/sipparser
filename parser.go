@@ -542,17 +542,11 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 }
 
 func ParseMsg(str string) (s *SipMsg) {
-	/* 	// Since strings.Index returns the index of the first instance of substr,
-	   	// make sure every SIP msg has the right ending
-	   	if !strings.HasSuffix(str, "\r\n\r\n") {
-	   		if strings.HasSuffix(str, "\r\n") {
-	   			str = str + "\r\n"
-	   		} else {
-	   			str = str + "\r\n\r\n"
-	   		}
-	   	} */
-
-	s = &SipMsg{Msg: str, eof: strings.Index(str, "\r\n\r\n")}
+	endPos := strings.Index(str, "\r\n\r\n")
+	if endPos == -1 {
+		endPos = strings.LastIndex(str, "\r\n")
+	}
+	s = &SipMsg{Msg: str, eof: endPos}
 	if s.eof == -1 {
 		s.Error = errors.New("ParseMsg: err parsing msg no SIP eof found")
 		return s
