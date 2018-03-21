@@ -67,12 +67,12 @@ func parsePAssertedIdGetUri(p *PAssertedId) pAssertedIdStateFn {
 	if left < right {
 		p.URI = ParseURI(p.Val[left+1 : right])
 		if p.URI.Error != nil {
-			p.Error = fmt.Errorf("parseRpidGetUri err: received err getting uri: %v", p.URI.Error)
+			p.Error = fmt.Errorf("parsePAssertedIdGetUri err: received err getting uri: %v", p.URI.Error)
 			return nil
 		}
 		return parsePAssertedIdGetParams
 	}
-	p.Error = errors.New("parseRpidGetUri err: could not locate bracks in uri")
+	p.Error = errors.New("parsePAssertedIdGetUri err: could not locate bracks in uri")
 	return nil
 }
 
