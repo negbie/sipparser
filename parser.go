@@ -377,7 +377,7 @@ func (s *SipMsg) parsePAssertedId(str string) {
 		s.PaiUser = s.PAssertedId.URI.User
 		s.PaiHost = s.PAssertedId.URI.Host
 	} else {
-		s.Error = s.PAssertedId.Error
+		s.PaiUser = s.PAssertedIdVal
 	}
 }
 
