@@ -74,6 +74,8 @@ type SipMsg struct {
 	ReasonVal        string
 	RTPStatVal       string
 	Via              []*Via
+	ViaOne           string
+	ViaOneBranch     string
 	Privacy          string
 	RemotePartyIdVal string
 	DiversionVal     string
@@ -520,6 +522,8 @@ func (s *SipMsg) parseVia(str string) {
 		s.Error = vs.err
 		return
 	}
+	s.ViaOne = vs.vias[0].Via
+	s.ViaOneBranch = vs.vias[0].Branch
 	for _, v := range vs.vias {
 		s.Via = append(s.Via, v)
 	}
