@@ -145,12 +145,12 @@ func (s *SipMsg) addHdr(str string) {
 		s.hdrv = ""
 	}
 	switch {
-	case s.hdr == SIP_HDR_ACCEPT:
-		s.parseAccept(s.hdrv)
-	case s.hdr == SIP_HDR_ALLOW:
-		s.parseAllow(s.hdrv)
-	case s.hdr == SIP_HDR_ALLOW_EVENTS || s.hdr == SIP_HDR_ALLOW_EVENTS_CMP:
-		s.parseAllowEvents(s.hdrv)
+	//case s.hdr == SIP_HDR_ACCEPT:
+	//s.parseAccept(s.hdrv)
+	//case s.hdr == SIP_HDR_ALLOW:
+	//s.parseAllow(s.hdrv)
+	//case s.hdr == SIP_HDR_ALLOW_EVENTS || s.hdr == SIP_HDR_ALLOW_EVENTS_CMP:
+	//s.parseAllowEvents(s.hdrv)
 	case s.hdr == SIP_HDR_AUTHORIZATION || s.hdr == SIP_HDR_PROXY_AUTHORIZATION:
 		s.parseAuthorization(s.hdrv)
 	case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
@@ -158,8 +158,8 @@ func (s *SipMsg) addHdr(str string) {
 	case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
 		s.ContactVal = s.hdrv
 		s.parseContact(str)
-	case s.hdr == SIP_HDR_CONTENT_DISPOSITION:
-		s.parseContentDisposition(s.hdrv)
+	//case s.hdr == SIP_HDR_CONTENT_DISPOSITION:
+	//s.parseContentDisposition(s.hdrv)
 	case s.hdr == SIP_HDR_CONTENT_LENGTH || s.hdr == SIP_HDR_CONTENT_LENGTH_CMP:
 		s.ContentLength = s.hdrv
 	case s.hdr == SIP_HDR_CONTENT_TYPE || s.hdr == SIP_HDR_CONTENT_TYPE_CMP:
@@ -178,39 +178,39 @@ func (s *SipMsg) addHdr(str string) {
 		s.parsePAssertedId(s.hdrv)
 	case s.hdr == SIP_HDR_PRIVACY:
 		s.Privacy = s.hdrv
-	case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
-		s.parseProxyAuthenticate(s.hdrv)
-	case s.hdr == SIP_HDR_RACK:
-		s.parseRack(s.hdrv)
+	//case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
+	//s.parseProxyAuthenticate(s.hdrv)
+	//case s.hdr == SIP_HDR_RACK:
+	//s.parseRack(s.hdrv)
 	case s.hdr == SIP_HDR_REASON:
 		s.ReasonVal = s.hdrv
 		//s.parseReason(s.hdrv)
-	case s.hdr == SIP_HDR_RECORD_ROUTE:
-		s.parseRecordRoute(s.hdrv)
+	//case s.hdr == SIP_HDR_RECORD_ROUTE:
+	//s.parseRecordRoute(s.hdrv)
 	case s.hdr == SIP_HDR_REMOTE_PARTY_ID:
 		s.RemotePartyIdVal = s.hdrv
 	case s.hdr == SIP_HDR_DIVERSION:
 		s.DiversionVal = s.hdrv
-	case s.hdr == SIP_HDR_ROUTE:
-		s.parseRoute(s.hdrv)
+	//case s.hdr == SIP_HDR_ROUTE:
+	//s.parseRoute(s.hdrv)
 	case s.hdr == SIP_HDR_X_RTP_STAT:
 		s.parseRTPStat(s.hdrv)
 	case s.hdr == SIP_HDR_SERVER:
 		s.Server = s.hdrv
-	case s.hdr == SIP_HDR_SUPPORTED:
-		s.parseSupported(s.hdrv)
+	//case s.hdr == SIP_HDR_SUPPORTED:
+	//s.parseSupported(s.hdrv)
 	case s.hdr == SIP_HDR_TO || s.hdr == SIP_HDR_TO_CMP:
 		s.parseTo(s.hdrv)
-	case s.hdr == SIP_HDR_UNSUPPORTED:
-		s.parseUnsupported(s.hdrv)
+	//case s.hdr == SIP_HDR_UNSUPPORTED:
+	//s.parseUnsupported(s.hdrv)
 	case s.hdr == SIP_HDR_USER_AGENT:
 		s.UserAgent = s.hdrv
 	case s.hdr == SIP_HDR_VIA || s.hdr == SIP_HDR_VIA_CMP:
 		s.parseVia(s.hdrv)
-	case s.hdr == SIP_HDR_WARNING:
-		s.parseWarning(s.hdrv)
-	case s.hdr == SIP_HDR_WWW_AUTHENTICATE:
-		s.parseWWWAuthenticate(s.hdrv)
+	//case s.hdr == SIP_HDR_WARNING:
+	//s.parseWarning(s.hdrv)
+	//case s.hdr == SIP_HDR_WWW_AUTHENTICATE:
+	//s.parseWWWAuthenticate(s.hdrv)
 	default:
 		s.Headers = append(s.Headers, &Header{s.hdr, s.hdrv})
 	}
@@ -305,24 +305,24 @@ func (s *SipMsg) getCallingPartyRpid() error {
 	return nil
 }
 
-func (s *SipMsg) parseAccept(str string) {
-	//s.Accept = &Accept{Val: str}
-	//s.Accept.parse()
-}
+/* func (s *SipMsg) parseAccept(str string) {
+	s.Accept = &Accept{Val: str}
+	s.Accept.parse()
+} */
 
-func (s *SipMsg) parseAllow(str string) {
-	/* 	s.Allow = getCommaSeperated(str)
-	   	if s.Allow == nil {
-	   		s.Allow = []string{str}
-	   	} */
-}
+/* func (s *SipMsg) parseAllow(str string) {
+	s.Allow = getCommaSeperated(str)
+	if s.Allow == nil {
+		s.Allow = []string{str}
+	}
+} */
 
-func (s *SipMsg) parseAllowEvents(str string) {
-	/* 	s.AllowEvents = getCommaSeperated(str)
-	   	if s.AllowEvents == nil {
-	   		s.Allow = []string{str}
-	   	} */
-}
+/* func (s *SipMsg) parseAllowEvents(str string) {
+	s.AllowEvents = getCommaSeperated(str)
+	if s.AllowEvents == nil {
+		s.Allow = []string{str}
+	}
+} */
 
 func (s *SipMsg) parseAuthorization(str string) {
 	s.Authorization = &Authorization{Val: str}
@@ -347,10 +347,10 @@ func (s *SipMsg) ParseContact(str string) {
 	s.parseContact(str)
 }
 
-func (s *SipMsg) parseContentDisposition(str string) {
-	/* 	s.ContentDisposition = &ContentDisposition{Val: str}
-	   	s.ContentDisposition.parse() */
-}
+/* func (s *SipMsg) parseContentDisposition(str string) {
+	s.ContentDisposition = &ContentDisposition{Val: str}
+	s.ContentDisposition.parse()
+} */
 
 func (s *SipMsg) parseCseq(str string) {
 	s.Cseq = &Cseq{Val: str}
@@ -385,15 +385,15 @@ func (s *SipMsg) ParsePAssertedId(str string) {
 	s.parsePAssertedId(str)
 }
 
-func (s *SipMsg) parseProxyAuthenticate(str string) {
-	//s.ProxyAuthenticate = &Authorization{Val: str}
-	//s.Error = s.ProxyAuthenticate.parse()
-}
+/* func (s *SipMsg) parseProxyAuthenticate(str string) {
+	s.ProxyAuthenticate = &Authorization{Val: str}
+	s.Error = s.ProxyAuthenticate.parse()
+} */
 
-func (s *SipMsg) parseRack(str string) {
-	//s.Rack = &Rack{Val: str}
-	//s.Error = s.Rack.parse()
-}
+/* func (s *SipMsg) parseRack(str string) {
+	s.Rack = &Rack{Val: str}
+	s.Error = s.Rack.parse()
+} */
 
 func (s *SipMsg) parseReason(str string) {
 	s.Reason = &Reason{Val: str}
@@ -406,33 +406,33 @@ func (s *SipMsg) parseRTPStat(str string) {
 	s.RTPStatVal = str
 }
 
-func (s *SipMsg) parseRecordRoute(str string) {
-	/* 	cs := []string{str}
-	   	for rt := range cs {
-	   		left := 0
-	   		right := 0
-	   		for i := range cs[rt] {
-	   			if cs[rt][i] == '<' && left == 0 {
-	   				left = i
-	   			}
-	   			if cs[rt][i] == '>' && right == 0 {
-	   				right = i
-	   			}
-	   		}
-	   		if left < right {
-	   			u := ParseURI(cs[rt][left+1 : right])
-	   			if u.Error != nil {
-	   				s.Error = fmt.Errorf("parseRecordRoute err: received err parsing uri: %v", u.Error)
-	   				return
-	   			}
-	   			if s.RecordRoute == nil {
-	   				s.RecordRoute = []*URI{u}
-	   			}
-	   			s.RecordRoute = append(s.RecordRoute, u)
-	   		}
-	   	}
-	   	return */
-}
+/* func (s *SipMsg) parseRecordRoute(str string) {
+	cs := []string{str}
+	for rt := range cs {
+		left := 0
+		right := 0
+		for i := range cs[rt] {
+			if cs[rt][i] == '<' && left == 0 {
+				left = i
+			}
+			if cs[rt][i] == '>' && right == 0 {
+				right = i
+			}
+		}
+		if left < right {
+			u := ParseURI(cs[rt][left+1 : right])
+			if u.Error != nil {
+				s.Error = fmt.Errorf("parseRecordRoute err: received err parsing uri: %v", u.Error)
+				return
+			}
+			if s.RecordRoute == nil {
+				s.RecordRoute = []*URI{u}
+			}
+			s.RecordRoute = append(s.RecordRoute, u)
+		}
+	}
+	return
+} */
 
 func (s *SipMsg) parseRemotePartyId(str string) {
 	s.RemotePartyId = &RemotePartyId{Val: str}
@@ -446,39 +446,39 @@ func (s *SipMsg) ParseRemotePartyId(str string) {
 	s.parseRemotePartyId(str)
 }
 
-func (s *SipMsg) parseRequire(str string) {
-	/* 	s.Require = getCommaSeperated(str)
-	   	if s.Require == nil {
-	   		s.Require = []string{str}
-	   	} */
-}
+/* func (s *SipMsg) parseRequire(str string) {
+	s.Require = getCommaSeperated(str)
+	if s.Require == nil {
+		s.Require = []string{str}
+	}
+} */
 
-func (s *SipMsg) parseRoute(str string) {
-	/* 	cs := getCommaSeperated(str)
-	   	for rt := range cs {
-	   		left := 0
-	   		right := 0
-	   		for i := range cs[rt] {
-	   			if cs[rt][i] == '<' && left == 0 {
-	   				left = i
-	   			}
-	   			if cs[rt][i] == '>' && right == 0 {
-	   				right = i
-	   			}
-	   		}
-	   		if left < right {
-	   			u := ParseURI(cs[rt][left+1 : right])
-	   			if u.Error != nil {
-	   				s.Error = fmt.Errorf("parseRoute err: received err parsing uri: %v", u.Error)
-	   				return
-	   			}
-	   			if s.Route == nil {
-	   				s.Route = []*URI{u}
-	   			}
-	   			s.Route = append(s.Route, u)
-	   		}
-	   	} */
-}
+/* func (s *SipMsg) parseRoute(str string) {
+	cs := getCommaSeperated(str)
+	for rt := range cs {
+		left := 0
+		right := 0
+		for i := range cs[rt] {
+			if cs[rt][i] == '<' && left == 0 {
+				left = i
+			}
+			if cs[rt][i] == '>' && right == 0 {
+				right = i
+			}
+		}
+		if left < right {
+			u := ParseURI(cs[rt][left+1 : right])
+			if u.Error != nil {
+				s.Error = fmt.Errorf("parseRoute err: received err parsing uri: %v", u.Error)
+				return
+			}
+			if s.Route == nil {
+				s.Route = []*URI{u}
+			}
+			s.Route = append(s.Route, u)
+		}
+	}
+} */
 
 func (s *SipMsg) parseStartLine(str string) {
 	s.State = sipParseStateStartLine
@@ -488,12 +488,12 @@ func (s *SipMsg) parseStartLine(str string) {
 	}
 }
 
-func (s *SipMsg) parseSupported(str string) {
-	/* 	s.Supported = getCommaSeperated(str)
-	   	if s.Supported == nil {
-	   		s.Supported = []string{str}
-	   	} */
-}
+/* func (s *SipMsg) parseSupported(str string) {
+	s.Supported = getCommaSeperated(str)
+	if s.Supported == nil {
+		s.Supported = []string{str}
+	}
+} */
 
 func (s *SipMsg) parseTo(str string) {
 	s.To = getFrom(str)
@@ -506,12 +506,12 @@ func (s *SipMsg) parseTo(str string) {
 	}
 }
 
-func (s *SipMsg) parseUnsupported(str string) {
-	/* 	s.Unsupported = getCommaSeperated(str)
-	   	if s.Unsupported == nil {
-	   		s.Unsupported = []string{str}
-	   	} */
-}
+/* func (s *SipMsg) parseUnsupported(str string) {
+	s.Unsupported = getCommaSeperated(str)
+	if s.Unsupported == nil {
+		s.Unsupported = []string{str}
+	}
+} */
 
 func (s *SipMsg) parseVia(str string) {
 	vs := &vias{via: str}
@@ -525,15 +525,15 @@ func (s *SipMsg) parseVia(str string) {
 	}
 }
 
-func (s *SipMsg) parseWarning(str string) {
-	//s.Warning = &Warning{Val: str}
-	//s.Error = s.Warning.parse()
-}
+/* func (s *SipMsg) parseWarning(str string) {
+	s.Warning = &Warning{Val: str}
+	s.Error = s.Warning.parse()
+} */
 
-func (s *SipMsg) parseWWWAuthenticate(str string) {
-	//s.WWWAuthenticate = &Authorization{Val: str}
-	//s.Error = s.WWWAuthenticate.parse()
-}
+/* func (s *SipMsg) parseWWWAuthenticate(str string) {
+	s.WWWAuthenticate = &Authorization{Val: str}
+	s.Error = s.WWWAuthenticate.parse()
+} */
 
 func getBody(s *SipMsg) sipParserStateFn {
 	s.State = sipParseStateBody
