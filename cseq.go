@@ -21,8 +21,8 @@ type Cseq struct {
 }
 
 func (c *Cseq) parse() error {
-	if c.Val == "" {
-		return errors.New("Cseq.parse err: val can not be blank")
+	if len(c.Val) < 3 {
+		return errors.New("Cseq.parse err: length of CSeq is < 3")
 	}
 	s := strings.IndexRune(c.Val, ' ')
 	if s == -1 {
@@ -34,7 +34,7 @@ func (c *Cseq) parse() error {
 	if len(c.Val)-1 < s+1 {
 		return errors.New("Cseq.parse err: first lws is end of line in val: " + c.Val)
 	}
-	c.Method = c.Val[s+1:]
 	c.Digit = c.Val[0:s]
+	c.Method = c.Val[s+1:]
 	return nil
 }
