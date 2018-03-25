@@ -146,6 +146,8 @@ const (
 	SIP_HDR_P_RTP_STAT           = "p-rtp-stat"
 	SIP_HDR_P_USER_DATABASE      = "p-user-database"      // RFC4457
 	SIP_HDR_P_VISITED_NETWORK_ID = "p-visited-network-id" // RFC3455
-	SIP_HDR_X_RTP_STAT           = "x-rtp-stat"           // like P-RTP-Stat, but in Libre/BareSIP
-	SIP_HDR_X_RTP_STAT_ADD       = "x-rtp-stat-add"
+	// X-RTP-Stat is AVM proprietary, see https://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/xrtpv32.pdf
+	SIP_HDR_X_RTP_STAT     = "x-rtp-stat"
+	SIP_HDR_X_RTP_STAT_ADD = "x-rtp-stat-add"
+	HOMER_HDR_X_CID        = "x-cid"
 )

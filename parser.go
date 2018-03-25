@@ -66,7 +66,8 @@ type SipMsg struct {
 	ContactUser      string
 	ContactHost      string
 	ContactPort      int
-	CallId           string
+	CallID           string
+	XCallID          string
 	Cseq             *Cseq
 	CseqMethod       string
 	CseqVal          string
@@ -114,7 +115,6 @@ type SipMsg struct {
 }
 
 func (s *SipMsg) run() {
-	s.Headers = make([]*Header, 0)
 	for state := parseSip; state != nil; {
 		state = state(s)
 	}
@@ -130,7 +130,7 @@ func (s *SipMsg) addErrorNoReturn(err string) {
 }
 
 func (s *SipMsg) addHdr(str string) {
-	if str == "" {
+	if str == "" || str == " " {
 		return
 	}
 	sp := strings.IndexRune(str, ':')
@@ -139,28 +139,29 @@ func (s *SipMsg) addHdr(str string) {
 		return
 	}
 	s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
-	switch {
-	case len(str)-1 >= sp+1:
+	if len(str)-1 >= sp+1 {
 		s.hdrv = cleanWs(str[sp+1:])
-	default:
+	} else {
 		s.Error = fmt.Errorf("addHdr err: no valid header: %s", s.hdr)
 		s.hdrv = ""
 	}
 	switch {
-	//case s.hdr == SIP_HDR_ACCEPT:
+	case s.hdr == SIP_HDR_ACCEPT || s.hdr == SIP_HDR_ACCEPT_ENCODING || s.hdr == SIP_HDR_ACCEPT_LANGUAGE:
 	//s.parseAccept(s.hdrv)
-	//case s.hdr == SIP_HDR_ALLOW:
+	case s.hdr == SIP_HDR_ALLOW:
 	//s.parseAllow(s.hdrv)
-	//case s.hdr == SIP_HDR_ALLOW_EVENTS || s.hdr == SIP_HDR_ALLOW_EVENTS_CMP:
+	case s.hdr == SIP_HDR_ALLOW_EVENTS || s.hdr == SIP_HDR_ALLOW_EVENTS_CMP:
 	//s.parseAllowEvents(s.hdrv)
 	case s.hdr == SIP_HDR_AUTHORIZATION || s.hdr == SIP_HDR_PROXY_AUTHORIZATION:
 		s.parseAuthorization(s.hdrv)
 	case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
-		s.CallId = s.hdrv
+		s.CallID = s.hdrv
+	case s.hdr == HOMER_HDR_X_CID:
+		s.XCallID = s.hdrv
 	case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
 		s.ContactVal = s.hdrv
 		s.parseContact(str)
-	//case s.hdr == SIP_HDR_CONTENT_DISPOSITION:
+	case s.hdr == SIP_HDR_CONTENT_DISPOSITION:
 	//s.parseContentDisposition(s.hdrv)
 	case s.hdr == SIP_HDR_CONTENT_LENGTH || s.hdr == SIP_HDR_CONTENT_LENGTH_CMP:
 		s.ContentLength = s.hdrv
@@ -180,41 +181,45 @@ func (s *SipMsg) addHdr(str string) {
 		s.parsePAssertedId(s.hdrv)
 	case s.hdr == SIP_HDR_PRIVACY:
 		s.Privacy = s.hdrv
-	//case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
+	case s.hdr == SIP_HDR_PROXY_AUTHENTICATE:
 	//s.parseProxyAuthenticate(s.hdrv)
-	//case s.hdr == SIP_HDR_RACK:
+	case s.hdr == SIP_HDR_RACK:
 	//s.parseRack(s.hdrv)
 	case s.hdr == SIP_HDR_REASON:
 		s.ReasonVal = s.hdrv
 		//s.parseReason(s.hdrv)
-	//case s.hdr == SIP_HDR_RECORD_ROUTE:
+	case s.hdr == SIP_HDR_RECORD_ROUTE:
 	//s.parseRecordRoute(s.hdrv)
 	case s.hdr == SIP_HDR_REMOTE_PARTY_ID:
 		s.RemotePartyIdVal = s.hdrv
 	case s.hdr == SIP_HDR_DIVERSION:
 		s.DiversionVal = s.hdrv
-	//case s.hdr == SIP_HDR_ROUTE:
+	case s.hdr == SIP_HDR_ROUTE:
 	//s.parseRoute(s.hdrv)
 	case s.hdr == SIP_HDR_X_RTP_STAT:
 		s.parseRTPStat(s.hdrv)
 	case s.hdr == SIP_HDR_SERVER:
 		s.Server = s.hdrv
-	//case s.hdr == SIP_HDR_SUPPORTED:
+	case s.hdr == SIP_HDR_SUPPORTED:
 	//s.parseSupported(s.hdrv)
 	case s.hdr == SIP_HDR_TO || s.hdr == SIP_HDR_TO_CMP:
 		s.parseTo(s.hdrv)
-	//case s.hdr == SIP_HDR_UNSUPPORTED:
+	case s.hdr == SIP_HDR_UNSUPPORTED:
 	//s.parseUnsupported(s.hdrv)
 	case s.hdr == SIP_HDR_USER_AGENT:
 		s.UserAgent = s.hdrv
 	case s.hdr == SIP_HDR_VIA || s.hdr == SIP_HDR_VIA_CMP:
 		s.parseVia(s.hdrv)
-	//case s.hdr == SIP_HDR_WARNING:
+	case s.hdr == SIP_HDR_WARNING:
 	//s.parseWarning(s.hdrv)
-	//case s.hdr == SIP_HDR_WWW_AUTHENTICATE:
+	case s.hdr == SIP_HDR_WWW_AUTHENTICATE:
 	//s.parseWWWAuthenticate(s.hdrv)
 	default:
-		s.Headers = append(s.Headers, &Header{s.hdr, s.hdrv})
+		/* 		// Append unkown headers to s.Headers
+		   		if s.Headers == nil {
+		   			s.Headers = make([]*Header, 0)
+		   		}
+		   		s.Headers = append(s.Headers, &Header{s.hdr, s.hdrv}) */
 	}
 }
 
@@ -539,6 +544,47 @@ func (s *SipMsg) parseVia(str string) {
 	s.Error = s.WWWAuthenticate.parse()
 } */
 
+func getHeaders(s *SipMsg) sipParserStateFn {
+	s.State = sipParseStateHeaders
+	var hdr string
+
+	for curPos, crlfPos := 0, 0; curPos < s.eof+2 && s.eof+2 <= len(s.Msg); curPos += 2 {
+		crlfPos = strings.Index(s.Msg[curPos:s.eof+2], "\r\n")
+		hdr = s.Msg[curPos : curPos+crlfPos]
+
+		if len(hdr) > 1 {
+			if hdr[0] == '\t' || hdr[0] == ' ' {
+				hdr = hdr[1:]
+			}
+		}
+		if len(hdr) > 2 {
+			if hdr[0:2] == "  " {
+				hdr = hdr[2:]
+			}
+		}
+		if len(hdr) > 3 {
+			if hdr[0:3] == "   " {
+				hdr = hdr[3:]
+			}
+		}
+		if len(hdr) > 4 {
+			if hdr[0:4] == "    " {
+				hdr = hdr[4:]
+			}
+		}
+		if curPos == 0 {
+			s.parseStartLine(hdr)
+		} else {
+			s.addHdr(hdr)
+		}
+		if s.Error != nil {
+			return nil
+		}
+		curPos += crlfPos
+	}
+	return nil
+}
+
 func getBody(s *SipMsg) sipParserStateFn {
 	s.State = sipParseStateBody
 	if len(s.Msg)-1 > s.eof+4 {
@@ -547,50 +593,12 @@ func getBody(s *SipMsg) sipParserStateFn {
 	return getHeaders
 }
 
-func getHeaders(s *SipMsg) sipParserStateFn {
-	s.State = sipParseStateHeaders
-	var lasth string
-	hdrs := strings.Split(s.Msg[0:s.eof], "\r\n")
-	for i := range hdrs {
-		switch {
-		case i == 0:
-			s.parseStartLine(hdrs[0])
-			if s.Error != nil {
-				return nil
-			}
-		case i == 1:
-			lasth = hdrs[i]
-		case i > 1:
-			if len(hdrs[i]) > 3 {
-				switch {
-				case hdrs[i][0] == '\t':
-					lasth = lasth + hdrs[i][1:]
-				case hdrs[i][0:4] == "    ":
-					lasth = lasth + hdrs[i][4:]
-				default:
-					s.addHdr(lasth)
-					if s.Error != nil {
-						return nil
-					}
-					lasth = hdrs[i]
-				}
-			}
-			if len(hdrs[i]) <= 3 {
-				s.addHdr(lasth)
-				lasth = hdrs[i]
-			}
-		}
-	}
-	s.addHdr(lasth)
-	return nil
-}
-
 func ParseMsg(str string) (s *SipMsg) {
-	endPos := strings.Index(str, "\r\n\r\n")
-	if endPos == -1 {
-		endPos = strings.LastIndex(str, "\r\n")
+	headersEnd := strings.Index(str, "\r\n\r\n")
+	if headersEnd == -1 {
+		headersEnd = strings.LastIndex(str, "\r\n")
 	}
-	s = &SipMsg{Msg: str, eof: endPos}
+	s = &SipMsg{Msg: str, eof: headersEnd}
 	if s.eof == -1 {
 		s.Error = errors.New("ParseMsg: err parsing msg no SIP eof found")
 		return s

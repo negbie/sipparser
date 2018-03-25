@@ -32,9 +32,9 @@ func TestParseMsg(t *testing.T) {
 	if len(s.Body) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg.  Body should have a length.")
 	}
-	if len(s.Headers) == 0 {
+	/* 	if len(s.Headers) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg.  Does not appear to be any headers.")
-	}
+	} */
 	if s.Via == nil || len(s.Via) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg.  Does not appear to be any vias parsed.")
 		//fmt.Println("msg:", s.Msg)
@@ -66,7 +66,7 @@ func TestParseMsg(t *testing.T) {
 	if s.Error != nil {
 		t.Errorf("[TestParseMsg] Error parsing msg. Recevied: %v", s.Error)
 	}
-	if got, want := s.CallId, "OvwBVivTMK19kN3Ws51_Dv"; got != want {
+	if got, want := s.CallID, "OvwBVivTMK19kN3Ws51_Dv"; got != want {
 		t.Errorf("[TestParseMsg] Error parsing msg.  Call-ID should be %s.  Received: %s", got, want)
 	}
 
