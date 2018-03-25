@@ -139,11 +139,10 @@ func (s *SipMsg) addHdr(str string) {
 		return
 	}
 	//s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
-	//s.hdr = strings.TrimSpace(str[0:sp])
 
 	s.hdr = str[0:sp]
 	if len(str[0:sp]) > 1 {
-		if str[sp] == '\t' || str[sp] == ' ' {
+		if str[sp-1] == '\t' || str[sp-1] == ' ' {
 			s.hdr = str[0 : sp-1]
 		}
 	}
