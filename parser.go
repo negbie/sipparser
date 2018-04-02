@@ -424,8 +424,12 @@ func (s *SipMsg) parsePAssertedId(str string) {
 	s.PAssertedId = &PAssertedId{Val: str}
 	s.PAssertedId.parse()
 	if s.PAssertedId.Error == nil {
-		s.PaiUser = s.PAssertedId.URI.User
-		s.PaiHost = s.PAssertedId.URI.Host
+		if s.PaiUser == "" {
+			s.PaiUser = s.PAssertedId.URI.User
+		}
+		if s.PaiHost == "" {
+			s.PaiHost = s.PAssertedId.URI.Host
+		}
 	} else {
 		s.PaiUser = s.PAssertedIdVal
 	}
