@@ -1,9 +1,10 @@
 About
 
-sipparser is a high performance parser for Session Initiated 
-Protocol messages written by Shelby Ramsey.  It provides a 
-library for use in building SIP user agents or any program 
-in go that needs to be able to parse SIP messages.
+sipparser is a fork from Shelby Ramsey SIP parser tweaked for
+performance and correctness. Benchmark on Intel i7-4790:
+
+Total messages: 280000
+Total time: 1.01s
 
 The library has an easy to use interface.
 
