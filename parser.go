@@ -181,6 +181,8 @@ func (s *SipMsg) addHdr(str string) {
 	case s.hdr == "Call-ID" || s.hdr == "Call-Id" || s.hdr == "Call-id" || s.hdr == "call-id" || s.hdr == "I" || s.hdr == "i":
 		s.CallID = s.hdrv
 	//case s.hdr == HOMER_HDR_X_CID:
+	case s.hdr == "P-Charging-Vector":
+		s.XCallID = s.hdrv
 	case s.hdr == "X-CID" || s.hdr == "x-cid" || s.hdr == "XCall-ID" || s.hdr == "XCall-Id":
 		s.XCallID = s.hdrv
 	//case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
