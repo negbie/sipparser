@@ -35,6 +35,11 @@ func TestUri(t *testing.T) {
 	if u.Host != "myfoo.com" {
 		t.Errorf("[TestUri] Error parsing URI \"tel:5554448000@myfoo.com\".  Host should be \"myfoo.com\" but received: " + u.Host)
 	}
+	s = "tel:+5554448000"
+	u = ParseURI(s)
+	if u.User != "+5554448000" {
+		t.Errorf("[TestUri] Error parsing URI \"tel:+5554448000\".  Should have received \"+5554448000\" as the user.  Received: " + u.User)
+	}
 	s = "sip:myfoo.com"
 	u = ParseURI(s)
 	if u.Raw != "myfoo.com" {

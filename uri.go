@@ -89,6 +89,9 @@ func parseUriGetAt(u *URI) uriStateFn {
 			return parseUriUser
 		}
 	}
+	if u.atPos == 0 && u.Scheme == TEL_SCHEME {
+		return parseUriUser
+	}
 	return parseUriHost
 }
 
@@ -118,7 +121,7 @@ func parseUriGetScheme(u *URI) uriStateFn {
 }
 
 func parseUriUser(u *URI) uriStateFn {
-	if u.atPos == 0 {
+	if u.atPos == 0 && u.Scheme != TEL_SCHEME {
 		return parseUriHost
 	}
 	firstSemi := strings.IndexRune(u.Raw[0:u.atPos], ';')
@@ -164,7 +167,11 @@ func parseUriUser(u *URI) uriStateFn {
 		case firstSemi != -1:
 			u.User = u.Raw[0:firstSemi]
 		default:
-			u.User = u.Raw[0:u.atPos]
+			if u.Scheme == TEL_SCHEME && u.atPos == 0 {
+				u.User = u.Raw[0:len(u.Raw)]
+			} else {
+				u.User = u.Raw[0:u.atPos]
+			}
 		}
 	}
 	return parseUriHost
