@@ -21,4 +21,14 @@ func TestCseq(t *testing.T) {
 	if sm.Cseq.Method != "INVITE" {
 		t.Errorf("[TestCseq] Error parsing cseq: \"100 INVITE\".  Method should be \"INVITE\".")
 	}
+	sm.parseCseq("1112423100   REGISTER   ")
+	if sm.Error != nil {
+		t.Errorf("[TestCseq] Error parsing cseq: \"1112423100   REGISTER   \". Received err: %v", sm.Error)
+	}
+	if sm.Cseq.Digit != "1112423100" {
+		t.Errorf("[TestCseq] Error parsing cseq: \"1112423100   REGISTER   \".  Digit should be 1112423100.")
+	}
+	if sm.Cseq.Method != "REGISTER" {
+		t.Errorf("[TestCseq] Error parsing cseq: \"1112423100   REGISTER   \".  Method should be \"REGISTER\".")
+	}
 }

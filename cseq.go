@@ -35,6 +35,10 @@ func (c *Cseq) parse() error {
 		return errors.New("Cseq.parse err: first lws is end of line in val: " + c.Val)
 	}
 	c.Digit = c.Val[0:s]
-	c.Method = c.Val[s+1:]
+	if c.Val[s+1] != ' ' {
+		c.Method = c.Val[s+1:]
+	} else {
+		c.Method = strings.TrimSpace(c.Val[s+1:])
+	}
 	return nil
 }

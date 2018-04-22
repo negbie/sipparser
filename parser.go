@@ -135,7 +135,6 @@ func (s *SipMsg) addHdr(str string) {
 	}
 	sp := strings.IndexRune(str, ':')
 	if sp == -1 {
-		s.Error = fmt.Errorf("addHdr err: no semi found in: %s", str)
 		return
 	}
 	//s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
