@@ -569,16 +569,25 @@ func (s *SipMsg) parseTo(str string) {
 } */
 
 func (s *SipMsg) parseVia(str string) {
-	vs := &vias{via: str}
-	vs.parse()
-	if vs.err != nil {
-		s.Error = vs.err
-		return
-	}
-	s.ViaOne = vs.vias[0].Via
-	s.ViaOneBranch = vs.vias[0].Branch
-	for _, v := range vs.vias {
-		s.Via = append(s.Via, v)
+	/* 	vs := &vias{via: str}
+	   	vs.parse()
+	   	if vs.err != nil {
+	   		s.Error = vs.err
+	   		return
+	   	}
+	   	for _, v := range vs.vias {
+	   		s.Via = append(s.Via, v)
+	   	}
+	*/
+	s.ViaOne = str
+	if a := strings.Index(str, "branch="); a > -1 && a < len(str) {
+		b := str[a:]
+		l := len(b)
+		if c := strings.Index(b, ";"); c > -1 && c < l && l > 7 {
+			s.ViaOneBranch = b[7:c]
+		} else if l > 7 {
+			s.ViaOneBranch = b[7:]
+		}
 	}
 }
 

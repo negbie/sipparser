@@ -35,13 +35,13 @@ func TestParseMsg(t *testing.T) {
 	/* 	if len(s.Headers) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg.  Does not appear to be any headers.")
 	} */
-	if s.Via == nil || len(s.Via) == 0 {
+	/* 	if s.Via == nil || len(s.Via) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg.  Does not appear to be any vias parsed.")
 		//fmt.Println("msg:", s.Msg)
 		//fmt.Println("body:", s.Body)
 		//fmt.Println("via:", s.Via)
 		//fmt.Println("crlf:", s.crlf)
-	}
+	} */
 	if got, want := s.ContentType, "application/sdp"; got != want {
 		t.Errorf("[TestParseMsg] Error parsing msg.  Content type should be %s.  Received: %s", want, got)
 	}
