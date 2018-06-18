@@ -1,3 +1,8 @@
+// Copyright 2011, Shelby Ramsey. All rights reserved.
+// Copyright 2018, Eugen Biegler. All rights reserved.
+// Use of this code is governed by a BSD license that can be
+// found in the LICENSE.txt file.
+
 package sipparser
 
 // Imports from go standard library

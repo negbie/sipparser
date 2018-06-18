@@ -1,4 +1,5 @@
-// Copyright 2011, Shelby Ramsey.   All rights reserved.
+// Copyright 2011, Shelby Ramsey. All rights reserved.
+// Copyright 2018, Eugen Biegler. All rights reserved.
 // Use of this code is governed by a BSD license that can be
 // found in the LICENSE.txt file.
 
@@ -8,16 +9,16 @@ import (
 	"testing"
 )
 
-/* func TestCleanWs(t *testing.T) {
-	s := "   white  space    .. "
-	if cleanWs(s) != "white space .." {
-		t.Errorf("[TestCleanWs] Error from cleanWs.  Got unexpected result.")
-	}
-	s = "white     space"
+func TestCleanWs(t *testing.T) {
+	s := "     white space	"
 	if cleanWs(s) != "white space" {
 		t.Errorf("[TestCleanWs] Error from cleanWs.  Got unexpected result.")
 	}
-} */
+	s = "	" // tab
+	if cleanWs(s) != "" {
+		t.Errorf("[TestCleanWs] Error from cleanWs.  Got unexpected result.")
+	}
+}
 
 func TestCleanBrack(t *testing.T) {
 	s := "<sip:foo@bar.com>"

@@ -1,3 +1,8 @@
+// Copyright 2011, Shelby Ramsey. All rights reserved.
+// Copyright 2018, Eugen Biegler. All rights reserved.
+// Use of this code is governed by a BSD license that can be
+// found in the LICENSE.txt file.
+
 package sipparser
 
 import (
@@ -137,33 +142,14 @@ func (s *SipMsg) addHdr(str string) {
 	if sp == -1 {
 		return
 	}
-	//s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
 
-	s.hdr = str[0:sp]
-	if len(str[0:sp]) > 1 {
-		if str[sp-1] == '\t' || str[sp-1] == ' ' {
-			s.hdr = str[0 : sp-1]
-		}
-	}
-	if len(str[0:sp]) > 2 {
-		if str[sp-2:sp] == "  " {
-			s.hdr = str[0 : sp-2]
-		}
-	}
-	if len(str[0:sp]) > 3 {
-		if str[sp-3:sp] == "   " {
-			s.hdr = str[0 : sp-3]
-		}
-	}
-	if len(str[0:sp]) > 4 {
-		if str[sp-4:sp] == "    " {
-			s.hdr = str[0 : sp-4]
-		}
-	}
+	//s.hdr = strings.ToLower(strings.TrimSpace(str[0:sp]))
+	s.hdr = cleanWs(str[0:sp])
+
 	if len(str)-1 >= sp+1 {
 		s.hdrv = cleanWs(str[sp+1:])
 	} else {
-		s.Error = fmt.Errorf("addHdr err: no valid header: %s", s.hdr)
+		// No header value
 		s.hdrv = ""
 	}
 	switch {
@@ -608,27 +594,8 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 	for curPos, crlfPos := 0, 0; curPos < s.eof+2 && s.eof+2 <= len(s.Msg); curPos += 2 {
 		crlfPos = strings.Index(s.Msg[curPos:s.eof+2], "\r\n")
 		hdr = s.Msg[curPos : curPos+crlfPos]
+		hdr = cleanWs(hdr)
 
-		if len(hdr) > 1 {
-			if hdr[0] == '\t' || hdr[0] == ' ' {
-				hdr = hdr[1:]
-			}
-		}
-		if len(hdr) > 2 {
-			if hdr[0:2] == "  " {
-				hdr = hdr[2:]
-			}
-		}
-		if len(hdr) > 3 {
-			if hdr[0:3] == "   " {
-				hdr = hdr[3:]
-			}
-		}
-		if len(hdr) > 4 {
-			if hdr[0:4] == "    " {
-				hdr = hdr[4:]
-			}
-		}
 		if curPos == 0 {
 			s.parseStartLine(hdr)
 		} else {

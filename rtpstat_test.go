@@ -1,8 +1,7 @@
-// Copyright 2015, Google Inc.   All rights reserved.
-//
-// Use of this code is governed by a BSD-style license that can be
-// found in the LICENSE.txt file or at
-// https://developers.google.com/open-source/licenses/bsd
+// Copyright 2011, Shelby Ramsey. All rights reserved.
+// Copyright 2018, Eugen Biegler. All rights reserved.
+// Use of this code is governed by a BSD license that can be
+// found in the LICENSE.txt file.
 
 package sipparser
 

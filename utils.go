@@ -1,4 +1,5 @@
-// Copyright 2011, Shelby Ramsey.   All rights reserved.
+// Copyright 2011, Shelby Ramsey. All rights reserved.
+// Copyright 2018, Eugen Biegler. All rights reserved.
 // Use of this code is governed by a BSD license that can be
 // found in the LICENSE.txt file.
 
@@ -9,11 +10,26 @@ import (
 	"strings"
 )
 
-func cleanWs(s string) (ns string) {
+func cleanWs(s string) string {
 	if s == "" {
-		return ""
+		return s
 	}
-	return strings.TrimSpace(s)
+PREFIXWS:
+	if len(s) > 0 {
+		if s[0] == ' ' || s[0] == '\t' {
+			s = s[1:]
+			goto PREFIXWS
+		}
+	}
+
+SUFFIXWS:
+	if len(s) > 0 {
+		if s[len(s)-1] == ' ' || s[len(s)-1] == '\t' {
+			s = s[0 : len(s)-1]
+			goto SUFFIXWS
+		}
+	}
+	return s
 }
 
 func cleanWsOld(s string) (ns string) {
