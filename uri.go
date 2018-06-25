@@ -170,6 +170,9 @@ func parseUriUser(u *URI) uriStateFn {
 		default:
 			if u.Scheme == TEL_SCHEME && u.atPos == 0 {
 				u.User = u.Raw[0:len(u.Raw)]
+				if e := strings.IndexRune(u.User, ';'); e > -1 {
+					u.User = u.Raw[0:e]
+				}
 			} else {
 				u.User = u.Raw[0:u.atPos]
 			}
