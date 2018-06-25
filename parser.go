@@ -73,6 +73,7 @@ type SipMsg struct {
 	ContactPort      int
 	CallID           string
 	XCallID          string
+	XHeader          []string
 	Cseq             *Cseq
 	CseqMethod       string
 	CseqVal          string
@@ -165,11 +166,6 @@ func (s *SipMsg) addHdr(str string) {
 	//case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
 	case s.hdr == "Call-ID" || s.hdr == "Call-Id" || s.hdr == "Call-id" || s.hdr == "call-id" || s.hdr == "I" || s.hdr == "i":
 		s.CallID = s.hdrv
-	//case s.hdr == HOMER_HDR_X_CID:
-	case s.hdr == "P-Charging-Vector":
-		s.XCallID = s.hdrv
-	case s.hdr == "X-CID" || s.hdr == "x-cid" || s.hdr == "XCall-ID" || s.hdr == "XCall-Id":
-		s.XCallID = s.hdrv
 	//case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
 	case s.hdr == "Contact" || s.hdr == "contact" || s.hdr == "M" || s.hdr == "m":
 		s.ContactVal = s.hdrv
@@ -245,11 +241,20 @@ func (s *SipMsg) addHdr(str string) {
 	case s.hdr == SIP_HDR_WWW_AUTHENTICATE:
 	//s.parseWWWAuthenticate(s.hdrv)
 	default:
-		/* 		// Append unkown headers to s.Headers
-		   		if s.Headers == nil {
-		   			s.Headers = make([]*Header, 0)
-		   		}
-		   		s.Headers = append(s.Headers, &Header{s.hdr, s.hdrv}) */
+		/*
+			// Append unkown headers to s.Headers
+			if s.Headers == nil {
+				s.Headers = make([]*Header, 0)
+			}
+			s.Headers = append(s.Headers, &Header{s.hdr, s.hdrv})
+		*/
+		if len(s.XHeader) > 0 {
+			for i := range s.XHeader {
+				if s.hdr == s.XHeader[i] {
+					s.XCallID = s.hdrv
+				}
+			}
+		}
 	}
 }
 
@@ -617,12 +622,12 @@ func getBody(s *SipMsg) sipParserStateFn {
 	return getHeaders
 }
 
-func ParseMsg(str string) (s *SipMsg) {
+func ParseMsg(str string, xcid ...string) (s *SipMsg) {
 	headersEnd := strings.Index(str, "\r\n\r\n")
 	if headersEnd == -1 {
 		headersEnd = strings.LastIndex(str, "\r\n")
 	}
-	s = &SipMsg{Msg: str, eof: headersEnd}
+	s = &SipMsg{Msg: str, XHeader: xcid, eof: headersEnd}
 	if s.eof == -1 {
 		s.Error = errors.New("ParseMsg: err parsing msg no SIP eof found")
 		return s

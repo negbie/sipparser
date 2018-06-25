@@ -150,5 +150,4 @@ const (
 	// X-RTP-Stat is AVM proprietary, see https://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/xrtpv32.pdf
 	SIP_HDR_X_RTP_STAT     = "x-rtp-stat"
 	SIP_HDR_X_RTP_STAT_ADD = "x-rtp-stat-add"
-	HOMER_HDR_X_CID        = "x-cid"
 )
