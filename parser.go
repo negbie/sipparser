@@ -164,29 +164,29 @@ func (s *SipMsg) addHdr(str string) {
 	case s.hdr == "Authorization" || s.hdr == "authorization" || s.hdr == "Proxy-Authorization" || s.hdr == "proxy-authorization":
 		s.parseAuthorization(s.hdrv)
 	//case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
-	case s.hdr == "Call-ID" || s.hdr == "Call-Id" || s.hdr == "Call-id" || s.hdr == "call-id" || s.hdr == "I" || s.hdr == "i":
+	case s.hdr == "Call-ID" || s.hdr == "CALL-ID" || s.hdr == "Call-Id" || s.hdr == "call-id" || s.hdr == "I" || s.hdr == "i":
 		s.CallID = s.hdrv
 	//case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
-	case s.hdr == "Contact" || s.hdr == "contact" || s.hdr == "M" || s.hdr == "m":
+	case s.hdr == "Contact" || s.hdr == "CONTACT" || s.hdr == "contact" || s.hdr == "M" || s.hdr == "m":
 		s.ContactVal = s.hdrv
 		s.parseContact(str)
 	case s.hdr == SIP_HDR_CONTENT_DISPOSITION:
 	//s.parseContentDisposition(s.hdrv)
 	//case s.hdr == SIP_HDR_CONTENT_LENGTH || s.hdr == SIP_HDR_CONTENT_LENGTH_CMP:
-	case s.hdr == "Content-Length" || s.hdr == "content-length" || s.hdr == "L" || s.hdr == "l":
+	case s.hdr == "Content-Length" || s.hdr == "CONTENT-LENGTH" || s.hdr == "content-length" || s.hdr == "L" || s.hdr == "l":
 		s.ContentLength = s.hdrv
 	//case s.hdr == SIP_HDR_CONTENT_TYPE || s.hdr == SIP_HDR_CONTENT_TYPE_CMP:
-	case s.hdr == "Content-Type" || s.hdr == "content-type" || s.hdr == "C" || s.hdr == "c":
+	case s.hdr == "Content-Type" || s.hdr == "CONTENT-TYPE" || s.hdr == "content-type" || s.hdr == "C" || s.hdr == "c":
 		s.ContentType = s.hdrv
 	//case s.hdr == SIP_HDR_CSEQ:
-	case s.hdr == "CSeq" || s.hdr == "Cseq" || s.hdr == "cSeq" || s.hdr == "cseq":
+	case s.hdr == "CSeq" || s.hdr == "CSEQ" || s.hdr == "Cseq" || s.hdr == "cseq":
 		s.CseqVal = s.hdrv
 		s.parseCseq(s.hdrv)
 	//case s.hdr == SIP_HDR_FROM || s.hdr == SIP_HDR_FROM_CMP:
-	case s.hdr == "From" || s.hdr == "from" || s.hdr == "F" || s.hdr == "f":
+	case s.hdr == "From" || s.hdr == "FROM" || s.hdr == "from" || s.hdr == "F" || s.hdr == "f":
 		s.parseFrom(s.hdrv)
 	//case s.hdr == SIP_HDR_MAX_FORWARDS:
-	case s.hdr == "Max-Forwards" || s.hdr == "max-forwards":
+	case s.hdr == "Max-Forwards" || s.hdr == "MAX-FORWARDS" || s.hdr == "max-forwards":
 		s.MaxForwards = s.hdrv
 	//case s.hdr == SIP_HDR_ORGANIZATION:
 	case s.hdr == "Organization" || s.hdr == "organization":
@@ -231,10 +231,10 @@ func (s *SipMsg) addHdr(str string) {
 	case s.hdr == SIP_HDR_UNSUPPORTED:
 	//s.parseUnsupported(s.hdrv)
 	//case s.hdr == SIP_HDR_USER_AGENT:
-	case s.hdr == "User-Agent" || s.hdr == "user-agent":
+	case s.hdr == "User-Agent" || s.hdr == "USER-AGENT" || s.hdr == "user-agent":
 		s.UserAgent = s.hdrv
 	//case s.hdr == SIP_HDR_VIA || s.hdr == SIP_HDR_VIA_CMP:
-	case s.hdr == "Via" || s.hdr == "via" || s.hdr == "V" || s.hdr == "v":
+	case s.hdr == "Via" || s.hdr == "VIA" || s.hdr == "via" || s.hdr == "V" || s.hdr == "v":
 		s.parseVia(s.hdrv)
 	case s.hdr == SIP_HDR_WARNING:
 	//s.parseWarning(s.hdrv)
