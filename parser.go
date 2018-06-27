@@ -599,14 +599,14 @@ func getHeaders(s *SipMsg) sipParserStateFn {
 
 	for curPos, crlfPos := 0, 0; curPos < s.eof+2 && s.eof+2 <= msgLen; curPos += 2 {
 		crlfPos = strings.Index(s.Msg[curPos:s.eof+2], "\n")
-		if crlfPos > 0 && strings.HasSuffix(s.Msg[curPos:curPos+crlfPos], "\r") {
-			crlfPos--
-			if curPos+crlfPos <= msgLen {
+		if crlfPos > 0 && curPos+crlfPos <= msgLen {
+			if strings.HasSuffix(s.Msg[curPos:curPos+crlfPos], "\r") {
+				crlfPos--
 				hdr = s.Msg[curPos : curPos+crlfPos]
+			} else {
+				hdr = s.Msg[curPos : curPos+crlfPos]
+				crlfPos--
 			}
-		} else if crlfPos > 0 && curPos+crlfPos <= msgLen {
-			hdr = s.Msg[curPos : curPos+crlfPos]
-			crlfPos--
 		}
 
 		hdr = cleanWs(hdr)
