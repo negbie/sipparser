@@ -47,14 +47,14 @@ func (r *Reason) parse() {
 		return
 	}
 	if len(pos) == 1 {
-		r.Proto = strings.TrimSpace(r.Val[0:pos[0]])
+		r.Proto = cleanWs(r.Val[0:pos[0]])
 		if len(r.Val)-1 > pos[0] {
 			r.addParam(strings.Replace(r.Val[pos[0]+1:], "\"", "", -1))
 		}
 		return
 	}
 	if len(pos) > 1 {
-		r.Proto = strings.TrimSpace(r.Val[0:pos[0]])
+		r.Proto = cleanWs(r.Val[0:pos[0]])
 		for i := range pos {
 			if len(pos)-1 == i {
 				if len(r.Val)-1 > pos[i] {

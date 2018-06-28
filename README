@@ -3,8 +3,8 @@ About
 sipparser is a fork from Shelby Ramsey SIP parser tweaked for
 performance and correctness. Benchmark on Intel i7-4790:
 
-Total messages: 280000
-Total time: 1.01s
+Total messages: 300000
+Total time: 1.04s
 
 The library has an easy to use interface.
 

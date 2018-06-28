@@ -124,7 +124,7 @@ func getName(s string) (name string, end int) {
 	posOne, posTwo, chk := getQuoteChars(s)
 	if chk == true {
 		if len(s)-1 > posTwo {
-			return strings.TrimSpace(s[posOne+1 : posTwo]), posTwo
+			return cleanWs(s[posOne+1 : posTwo]), posTwo
 		}
 		return "", 0
 	}
@@ -135,7 +135,7 @@ func getName(s string) (name string, end int) {
 	if posOne == 0 {
 		return "", 0
 	}
-	return strings.TrimSpace(s[0:posOne]), posOne
+	return cleanWs(s[0:posOne]), posOne
 }
 
 func getCommaSeperated(str string) []string {
@@ -144,7 +144,7 @@ func getCommaSeperated(str string) []string {
 		return nil
 	}
 	for i := range s {
-		s[i] = strings.TrimSpace(s[i])
+		s[i] = cleanWs(s[i])
 	}
 	return s
 }

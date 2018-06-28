@@ -6,9 +6,6 @@
 package sipparser
 
 // Imports from go standard library
-import (
-	"strings"
-)
 
 // Param is just a struct that holds a parameter and a value
 // As an example of this would be something like user=phone
@@ -23,14 +20,14 @@ func getParam(s string) *Param {
 	p := new(Param)
 	for i := range s {
 		if s[i] == '=' {
-			p.Param = strings.TrimSpace(s[0:i])
+			p.Param = cleanWs(s[0:i])
 			if i+1 < len(s) {
-				p.Val = strings.TrimSpace(s[i+1:])
+				p.Val = cleanWs(s[i+1:])
 				return p
 			}
 			return p
 		}
 	}
-	p.Param = strings.TrimSpace(s)
+	p.Param = cleanWs(s)
 	return p
 }

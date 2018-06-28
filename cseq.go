@@ -39,7 +39,7 @@ func (c *Cseq) parse() error {
 	if c.Val[s+1] != ' ' {
 		c.Method = c.Val[s+1:]
 	} else {
-		c.Method = strings.TrimSpace(c.Val[s+1:])
+		c.Method = cleanWs(c.Val[s+1:])
 	}
 	return nil
 }
