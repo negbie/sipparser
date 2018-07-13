@@ -164,7 +164,7 @@ func (s *SipMsg) addHdr(str string) {
 	case s.hdr == "Authorization" || s.hdr == "authorization" || s.hdr == "Proxy-Authorization" || s.hdr == "proxy-authorization":
 		s.parseAuthorization(s.hdrv)
 	//case s.hdr == SIP_HDR_CALL_ID || s.hdr == SIP_HDR_CALL_ID_CMP:
-	case s.hdr == "Call-ID" || s.hdr == "CALL-ID" || s.hdr == "Call-Id" || s.hdr == "call-id" || s.hdr == "I" || s.hdr == "i":
+	case s.hdr == "Call-ID" || s.hdr == "CALL-ID" || s.hdr == "Call-Id" || s.hdr == "Call-id" || s.hdr == "call-id" || s.hdr == "I" || s.hdr == "i":
 		s.CallID = s.hdrv
 	//case s.hdr == SIP_HDR_CONTACT || s.hdr == SIP_HDR_CONTACT_CMP:
 	case s.hdr == "Contact" || s.hdr == "CONTACT" || s.hdr == "contact" || s.hdr == "M" || s.hdr == "m":
