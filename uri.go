@@ -182,6 +182,10 @@ func parseUriUser(u *URI) uriStateFn {
 }
 
 func parseUriHost(u *URI) uriStateFn {
+	if len(u.Raw) <= u.atPos {
+		return nil
+	}
+
 	firstSemi := strings.IndexRune(u.Raw[u.atPos:], ';')
 	if firstSemi != -1 {
 		if u.UriParams == nil {
