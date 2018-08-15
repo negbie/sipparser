@@ -7,6 +7,7 @@ package sipparser
 
 // Imports from the go standard library
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -183,6 +184,7 @@ func parseUriUser(u *URI) uriStateFn {
 
 func parseUriHost(u *URI) uriStateFn {
 	if len(u.Raw) <= u.atPos {
+		u.Error = fmt.Errorf("malformed host part inside URI: %s", u.Raw)
 		return nil
 	}
 
