@@ -258,6 +258,22 @@ func (s *SipMsg) addHdr(str string) {
 	}
 }
 
+func GetSIPHeaderVal(header string, data string) (val string) {
+	l := len(header)
+	if startPos := strings.Index(data, header); startPos > -1 {
+		restData := data[startPos:]
+		if endPos := strings.Index(restData, "\r\n"); endPos > l {
+			val = restData[l:endPos]
+			i := 0
+			for i < len(val) && (val[i] == ' ' || val[i] == '\t') {
+				i++
+			}
+			return val[i:]
+		}
+	}
+	return ""
+}
+
 func (s *SipMsg) GetRURIParamBool(str string) bool {
 	if s.StartLine == nil || s.StartLine.URI == nil {
 		return false
