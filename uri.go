@@ -48,9 +48,9 @@ type URI struct {
 	Host         string // the host in the uri
 	Port         string // the port
 	PortInt      int
-	UriParams    []*Param
-	Secure       bool // Indicates SIP-URI or SIPS-URI (true for SIPS-URI)
-	atPos        int
+	//UriParams    []*Param
+	Secure bool // Indicates SIP-URI or SIPS-URI (true for SIPS-URI)
+	atPos  int
 }
 
 // NewURI is a convenience function that creates a *URI for you
@@ -128,17 +128,19 @@ func parseUriUser(u *URI) uriStateFn {
 	}
 	firstSemi := strings.IndexRune(u.Raw[0:u.atPos], ';')
 	colon := 0
-	if firstSemi != -1 {
-		if u.UriParams == nil {
-			u.UriParams = make([]*Param, 0)
-		}
-		if len(u.Raw[0:u.atPos])-1 > firstSemi+1 {
-			params := strings.Split(u.Raw[firstSemi+1:], ";")
-			for i := range params {
-				u.UriParams = append(u.UriParams, getParam(params[i]))
+	/*
+		if firstSemi != -1 {
+			if u.UriParams == nil {
+				u.UriParams = make([]*Param, 0)
+			}
+			if len(u.Raw[0:u.atPos])-1 > firstSemi+1 {
+				params := strings.Split(u.Raw[firstSemi+1:], ";")
+				for i := range params {
+					u.UriParams = append(u.UriParams, getParam(params[i]))
+				}
 			}
 		}
-	}
+	*/
 	switch {
 	case firstSemi != -1:
 		for i := range u.Raw[0:firstSemi] {
@@ -189,17 +191,19 @@ func parseUriHost(u *URI) uriStateFn {
 	}
 
 	firstSemi := strings.IndexRune(u.Raw[u.atPos:], ';')
-	if firstSemi != -1 {
-		if u.UriParams == nil {
-			u.UriParams = make([]*Param, 0)
-		}
-		if len(u.Raw[u.atPos:])-1 > firstSemi+1 {
-			uriparams := strings.Split(u.Raw[u.atPos:][firstSemi+1:], ";")
-			for i := range uriparams {
-				u.UriParams = append(u.UriParams, getParam(uriparams[i]))
+	/*
+		if firstSemi != -1 {
+			if u.UriParams == nil {
+				u.UriParams = make([]*Param, 0)
+			}
+			if len(u.Raw[u.atPos:])-1 > firstSemi+1 {
+				uriparams := strings.Split(u.Raw[u.atPos:][firstSemi+1:], ";")
+				for i := range uriparams {
+					u.UriParams = append(u.UriParams, getParam(uriparams[i]))
+				}
 			}
 		}
-	}
+	*/
 	colon := 0
 	if firstSemi != -1 {
 		for i := range u.Raw[u.atPos : u.atPos+firstSemi] {

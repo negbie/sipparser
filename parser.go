@@ -44,43 +44,43 @@ func (h *Header) String() string {
 type sipParserStateFn func(s *SipMsg) sipParserStateFn
 
 type SipMsg struct {
-	State            string
-	Error            error
-	Msg              string
-	CallingParty     *CallingPartyInfo
-	Body             string
-	StartLine        *StartLine
-	Headers          []*Header
-	Authorization    *Authorization
-	AuthVal          string
-	AuthUser         string
-	ContentLength    string
-	ContentType      string
-	From             *From
-	FromUser         string
-	FromHost         string
-	FromTag          string
-	MaxForwards      string
-	Organization     string
-	To               *From
-	ToUser           string
-	ToHost           string
-	ToTag            string
-	Contact          *From
-	ContactVal       string
-	ContactUser      string
-	ContactHost      string
-	ContactPort      int
-	CallID           string
-	XCallID          string
-	XHeader          []string
-	Cseq             *Cseq
-	CseqMethod       string
-	CseqVal          string
-	Reason           *Reason
-	ReasonVal        string
-	RTPStatVal       string
-	Via              []*Via
+	State        string
+	Error        error
+	Msg          string
+	CallingParty *CallingPartyInfo
+	Body         string
+	StartLine    *StartLine
+	//Headers       []*Header
+	Authorization *Authorization
+	AuthVal       string
+	AuthUser      string
+	ContentLength string
+	ContentType   string
+	From          *From
+	FromUser      string
+	FromHost      string
+	FromTag       string
+	MaxForwards   string
+	Organization  string
+	To            *From
+	ToUser        string
+	ToHost        string
+	ToTag         string
+	Contact       *From
+	ContactVal    string
+	ContactUser   string
+	ContactHost   string
+	ContactPort   int
+	CallID        string
+	XCallID       string
+	XHeader       []string
+	Cseq          *Cseq
+	CseqMethod    string
+	CseqVal       string
+	Reason        *Reason
+	ReasonVal     string
+	RTPStatVal    string
+	//Via              []*Via
 	ViaOne           string
 	ViaOneBranch     string
 	Privacy          string
@@ -274,6 +274,7 @@ func GetSIPHeaderVal(header string, data string) (val string) {
 	return ""
 }
 
+/*
 func (s *SipMsg) GetRURIParamBool(str string) bool {
 	if s.StartLine == nil || s.StartLine.URI == nil {
 		return false
@@ -297,6 +298,7 @@ func (s *SipMsg) GetRURIParamVal(str string) string {
 	}
 	return ""
 }
+*/
 
 func (s *SipMsg) GetCallingParty(str string) error {
 	switch {

@@ -12,8 +12,7 @@ import (
 	"strings"
 )
 
-const ()
-
+/*
 var (
 	SIP_METHODS = []string{
 		SIP_METHOD_INVITE,
@@ -32,6 +31,7 @@ var (
 		SIP_METHOD_PUBLISH,
 	}
 )
+*/
 
 type parseStartLineStateFn func(s *StartLine) parseStartLineStateFn
 

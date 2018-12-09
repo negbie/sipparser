@@ -15,9 +15,10 @@ type Authorization struct {
 	Val         string
 	Credentials string
 	Username    string
-	Params      []*Param
+	//Params      []*Param
 }
 
+/*
 func (a *Authorization) GetParam(param string) *Param {
 	if a.Params == nil {
 		return nil
@@ -29,7 +30,7 @@ func (a *Authorization) GetParam(param string) *Param {
 	}
 	return nil
 }
-
+*/
 func (a *Authorization) parse() error {
 	pos := strings.IndexRune(a.Val, ' ')
 	if pos == -1 {
@@ -39,13 +40,16 @@ func (a *Authorization) parse() error {
 	if len(a.Val)-1 <= pos {
 		return errors.New("Authorization.parse err: no digest-resp found")
 	}
-	a.Params = make([]*Param, 0)
-	parts := strings.Split(a.Val[pos+1:], ",")
-	for i := range parts {
-		a.Params = append(a.Params, getParam(strings.Replace(parts[i], "\"", "", -1)))
-	}
-	if a.GetParam("username") != nil {
-		a.Username = a.GetParam("username").Val
-	}
+	a.Username = extractParam("username=\"", a.Val)
+	/*
+		a.Params = make([]*Param, 0)
+		parts := strings.Split(a.Val[pos+1:], ",")
+		for i := range parts {
+			a.Params = append(a.Params, getParam(strings.Replace(parts[i], "\"", "", -1)))
+		}
+		if a.GetParam("username") != nil {
+			a.Username = a.GetParam("username").Val
+		}
+	*/
 	return nil
 }

@@ -8,12 +8,11 @@ package sipparser
 // Imports from the go standard library
 import (
 	"fmt"
-	"strings"
 )
 
 type parseFromStateFn func(f *From) parseFromStateFn
 
-// from holds a parsed header that has a format like:
+// From holds a parsed header that has a format like:
 // "NAME" <sip:user@hostinfo>;param=val
 // and is used for the parsing of the from, to, and
 // contact header in the parser program
@@ -26,12 +25,12 @@ type parseFromStateFn func(f *From) parseFromStateFn
 // -- Params are for any generic params that are part of
 //    the header
 type From struct {
-	Error      error
-	Val        string
-	Name       string
-	Tag        string
-	URI        *URI
-	Params     []*Param
+	Error error
+	Val   string
+	Name  string
+	Tag   string
+	URI   *URI
+	//Params     []*Param
 	endName    int
 	rightBrack int
 	leftBrack  int
@@ -44,6 +43,7 @@ func (f *From) parse() {
 	}
 }
 
+/*
 func (f *From) addParam(s string) {
 	p := getParam(s)
 	switch {
@@ -56,6 +56,7 @@ func (f *From) addParam(s string) {
 		f.Params = append(f.Params, p)
 	}
 }
+*/
 
 func parseFromState(f *From) parseFromStateFn {
 	if f.Error != nil {
@@ -73,13 +74,15 @@ func parseFromGetURI(f *From) parseFromStateFn {
 			f.Error = fmt.Errorf("parseFromGetURI err: rcvd err parsing uri: %v", f.URI.Error)
 			return nil
 		}
-		if f.URI.UriParams != nil {
-			for i := range f.URI.UriParams {
-				if f.URI.UriParams[i].Param == "tag" {
-					f.Tag = f.URI.UriParams[i].Val
+		/*
+			if f.URI.UriParams != nil {
+				for i := range f.URI.UriParams {
+					if f.URI.UriParams[i].Param == "tag" {
+						f.Tag = f.URI.UriParams[i].Val
+					}
 				}
 			}
-		}
+		*/
 		return nil
 	}
 	if f.brackChk == true {
@@ -94,18 +97,21 @@ func parseFromGetURI(f *From) parseFromStateFn {
 }
 
 func parseFromGetParams(f *From) parseFromStateFn {
-	if f.brackChk == true && len(f.Val) > f.rightBrack+1 {
-		pms := strings.Split(f.Val[f.rightBrack+1:], ";")
-		for i := range pms {
-			f.addParam(pms[i])
+	/*
+		if f.brackChk == true && len(f.Val) > f.rightBrack+1 {
+			pms := strings.Split(f.Val[f.rightBrack+1:], ";")
+			for i := range pms {
+				f.addParam(pms[i])
+			}
+			return nil
 		}
-		return nil
-	}
+	*/
 	return nil
 }
 
 func getFrom(s string) *From {
 	f := &From{Val: s}
+	f.Tag = extractParam("tag=", s)
 	f.parse()
 	return f
 }
