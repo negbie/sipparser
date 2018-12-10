@@ -31,7 +31,10 @@ func TestBody(t *testing.T) {
 // actual msg testing
 func TestParseMsg(t *testing.T) {
 	x := []string{"X-MEN", "X-FORCE"}
-	m := "SIP/2.0 200 OK\r\nVia: SIP/2.0/UDP 0.0.0.0:5060;branch=z9hG4bK24477ab511325213INV52e94be64e6687e3;received=0.0.0.0\r\nContact: <sip:10003053258853@0.0.0.0:6060>\r\nTo: <sip:10003053258853@0.0.0.0;user=phone;noa=national>;tag=a94c095b773be1dd6e8d668a785a9c843f6f2cc0\r\nFrom: <sip:8173383772@0.0.0.0;user=phone;noa=national>;tag=52e94be6-co2998-INS002\nCall-ID: 111118149-3524331107-398662@barinfo.fooinfous.com\r\nCSeq: 299801 INVITE\r\nAccept: application/sdp, application/dtmf-relay, text/plain\r\nX-Nonsense-Hdr: nonsense\r\nAllow: PRACK, INVITE, BYE, REGISTER, ACK, OPTIONS, CANCEL, SUBSCRIBE, NOTIFY, INFO, REFER, UPDATE\r\nContent-Type: application/sdp\r\nServer: Dialogic-SIP/10.5.3.231 IMGDAL0001 0\r\nSupported: 100rel, path, replaces, timer, tdialog\r\nContent-Length: 239\r\nX-FORCE: Deadpool\r\nP-Asserted-Identity: <sip:8884441111@1.1.1.1:5060;user=phone>\r\nP-Asserted-Identity: <sip:8884442222>\r\nX-RTP-Stat: CS=0;PS=1433;ES=1525;OS=229280;SP=0/0;SO=0;QS=-;PR=1522;ER=1525;OR=243520;CR=0;SR=0;QR=-;PL=0,0;BL=0;LS=0;RB=0/0;SB=-/-;EN=PCMA,FAX;DE=PCMA;JI=23,2;DL=20,20,21;IP=83.138.49.179:7082,102.183.157.163:25132\r\nX-RTP-Stat-Add: DQ=31;DSS=0;DS=0;PLCS=288;JS=1\r\n\r\nv=0\r\no=Dialogic_SDP 1452654 0 IN IP4 0.0.0.0\r\ns=Dialogic-SIP\r\nc=IN IP4 4.71.122.135\r\nt=0 0\r\nm=audio 11676 RTP/AVP 0 101\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:101 telephone-event/8000\r\na=fmtp:101 0-15\r\na=silenceSupp:off - - - -\r\na=ptime:20\r\n"
+	m := "SIP/2.0 200 OK\r\nVia: SIP/2.0/UDP 0.0.0.0:5060;branch=z9hG4bK24477ab511325213INV52e94be64e6687e3;received=0.0.0.0\r\nContact: <sip:10003053258853@0.0.0.0:6060>\r\nTo: <sip:10003053258853@0.0.0.0;user=phone;noa=national>;tag=a94c095b773be1dd6e8d668a785a9c843f6f2cc0\r\nFrom: <sip:8173383772@0.0.0.0;user=phone;noa=national>;tag=52e94be6-co2998-INS002\nCall-ID: 111118149-3524331107-398662@barinfo.fooinfous.com\r\nCSeq: 299801 INVITE\r\nDiversion: something\r\nAccept: application/sdp, application/dtmf-relay, text/plain\r\nUser-Agent: FAKE-UA-DATA\r\nRemote-Party-Id: something\r\nServer: something\r\nX-Nonsense-Hdr: nonsense\r\n" +
+		"Allow: PRACK, INVITE, BYE, REGISTER, ACK, OPTIONS, CANCEL, SUBSCRIBE, NOTIFY, INFO, REFER, UPDATE\r\nContent-Type: application/sdp\r\nServer: Dialogic-SIP/10.5.3.231 IMGDAL0001 0\r\nSupported: 100rel, path, replaces, timer, tdialog\r\nContent-Length: 239\r\nX-FORCE: Deadpool\r\nP-Asserted-Identity: <sip:8884441111@1.1.1.1:5060;user=phone>\r\nP-Asserted-Identity: <sip:8884442222>\r\n" +
+		"Contact: something\r\nAuthorization: Digest username=\"foobaruser124\", realm=\"FOOBAR\"\r\nProxy-Authorization: Digest username=\"foobaruser124\", realm=\"FOOBAR\"\r\n" +
+		"X-RTP-Stat: CS=0;PS=1433;ES=1525;OS=229280;SP=0/0;SO=0;QS=-;PR=1522;ER=1525;OR=243520;CR=0;SR=0;QR=-;PL=0,0;BL=0;LS=0;RB=0/0;SB=-/-;EN=PCMA,FAX;DE=PCMA;JI=23,2;DL=20,20,21;IP=83.138.49.179:7082,102.183.157.163:25132\r\nX-RTP-Stat-Add: DQ=31;DSS=0;DS=0;PLCS=288;JS=1\r\n\r\nv=0\r\no=Dialogic_SDP 1452654 0 IN IP4 0.0.0.0\r\ns=Dialogic-SIP\r\nc=IN IP4 4.71.122.135\r\nt=0 0\r\nm=audio 11676 RTP/AVP 0 101\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:101 telephone-event/8000\r\na=fmtp:101 0-15\r\na=silenceSupp:off - - - -\r\na=ptime:20\r\n"
 	if got, want := GetSIPHeaderVal("Call-ID:", m), "111118149-3524331107-398662@barinfo.fooinfous.com"; got != want {
 		t.Errorf("[TestGetSIPHeaderVal] Error getting Call-ID. Call-ID: should be '%s'. Received: '%s'", want, got)
 	}
@@ -44,6 +47,7 @@ func TestParseMsg(t *testing.T) {
 	if len(s.Body) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg. Body should have a length.")
 	}
+
 	/* 	if len(s.Headers) == 0 {
 		t.Error("[TestParseMsg] Error parsing msg.  Does not appear to be any headers.")
 	} */
@@ -69,6 +73,15 @@ func TestParseMsg(t *testing.T) {
 	if s.ToTag != "a94c095b773be1dd6e8d668a785a9c843f6f2cc0" {
 		t.Errorf("[TestParseMsg] Error parsing msg. To Tag should be a94c095b773be1dd6e8d668a785a9c843f6f2cc0. Received: %s", s.ToTag)
 	}
+	if s.UserAgent != "FAKE-UA-DATA" {
+		t.Errorf("[TestParseMsg] Error parsing msg. UserAgent should be FAKE-UA-DATA. Received: %s", s.UserAgent)
+	}
+	if s.ViaOneBranch != "z9hG4bK24477ab511325213INV52e94be64e6687e3" {
+		t.Errorf("[TestParseMsg] Error parsing msg. ViaOneBranch should be z9hG4bK24477ab511325213INV52e94be64e6687e3. Received: %s", s.ViaOneBranch)
+	}
+	if s.CseqMethod != "INVITE" {
+		t.Errorf("[TestParseMsg] Error parsing msg. CseqMethod should be INVITE. Received: %s", s.CseqMethod)
+	}
 
 	/* 	if s.ContentLengthInt != 239 {
 		t.Errorf("[TestParseMsg] Error parsing msg.  ContentLengthInt should be 239.  Received: %d", s.ContentLengthInt)
@@ -82,14 +95,25 @@ func TestParseMsg(t *testing.T) {
 	if got, want := s.PaiHost, "1.1.1.1"; got != want {
 		t.Errorf("[TestParseMsg] Error parsing msg. PaiHost should be %s. Received: %s", want, got)
 	}
-	/*
-		x := "CS=0;PS=1433;ES=1525;OS=229280;SP=0/0;SO=0;QS=-;PR=1522;ER=1525;OR=243520;CR=0;SR=0;QR=-;PL=0,0;BL=0;LS=0;RB=0/0;SB=-/-;EN=PCMA,FAX;DE=PCMA;JI=23,2;DL=20,20,21;IP=83.138.49.179:7082,102.183.157.163:25132;DQ=31;DSS=0;DS=0;PLCS=288;JS=1"
-		if s.RTPStat == nil {
-			t.Error("[TestParseMsg] Error parsing msg.  s.RTPStat: got nil, want non-nil.")
-		} else if s.RTPStat.Val != x {
-			t.Errorf("[TestParseMsg] Error parsing msg.  s.RTPStat.PS: got %s, want %s", s.RTPStat.Val, x)
-		}
-	*/
+	if s.RTPStatVal == "" {
+		t.Error("[TestParseMsg] Error parsing msg. RTPStatVal shouldn't be empty.")
+	}
+	if s.DiversionVal == "" {
+		t.Error("[TestParseMsg] Error parsing msg. DiversionVal shouldn't be empty.")
+	}
+	if s.RemotePartyIdVal == "" {
+		t.Error("[TestParseMsg] Error parsing msg. RemotePartyIdVal shouldn't be empty.")
+	}
+	if s.Server == "" {
+		t.Error("[TestParseMsg] Error parsing msg. Server shouldn't be empty.")
+	}
+	if s.AuthVal == "" {
+		t.Error("[TestParseMsg] Error parsing msg. AuthVal shouldn't be empty.")
+	}
+	if s.ContactVal == "" {
+		t.Error("[TestParseMsg] Error parsing msg. ContactVal shouldn't be empty.")
+	}
+
 	if got, want := s.XCallID, "Deadpool"; got != want {
 		t.Errorf("[TestParseMsg] Error parsing msg. XCallID should be %s. Received: %s", want, got)
 	}
@@ -184,4 +208,12 @@ func BenchmarkParseMsg(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		ParseMsg(testInviteMsg)
 	}
+}
+
+func BenchmarkParseMsgParallel(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			ParseMsg(testInviteMsg)
+		}
+	})
 }
