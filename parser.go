@@ -44,43 +44,40 @@ func (h *Header) String() string {
 type sipParserStateFn func(s *SipMsg) sipParserStateFn
 
 type SipMsg struct {
-	State        string
-	Error        error
-	Msg          string
-	CallingParty *CallingPartyInfo
-	Body         string
-	StartLine    *StartLine
-	//Headers       []*Header
-	Authorization *Authorization
-	AuthVal       string
-	AuthUser      string
-	ContentLength string
-	ContentType   string
-	From          *From
-	FromUser      string
-	FromHost      string
-	FromTag       string
-	MaxForwards   string
-	Organization  string
-	To            *From
-	ToUser        string
-	ToHost        string
-	ToTag         string
-	Contact       *From
-	ContactVal    string
-	ContactUser   string
-	ContactHost   string
-	ContactPort   int
-	CallID        string
-	XCallID       string
-	XHeader       []string
-	Cseq          *Cseq
-	CseqMethod    string
-	CseqVal       string
-	Reason        *Reason
-	ReasonVal     string
-	RTPStatVal    string
-	//Via              []*Via
+	State            string
+	Error            error
+	Msg              string
+	CallingParty     *CallingPartyInfo
+	Body             string
+	Authorization    *Authorization
+	AuthVal          string
+	AuthUser         string
+	ContentLength    string
+	ContentType      string
+	From             *From
+	FromUser         string
+	FromHost         string
+	FromTag          string
+	MaxForwards      string
+	Organization     string
+	To               *From
+	ToUser           string
+	ToHost           string
+	ToTag            string
+	Contact          *From
+	ContactVal       string
+	ContactUser      string
+	ContactHost      string
+	ContactPort      int
+	CallID           string
+	XCallID          string
+	XHeader          []string
+	Cseq             *Cseq
+	CseqMethod       string
+	CseqVal          string
+	Reason           *Reason
+	ReasonVal        string
+	RTPStatVal       string
 	ViaOne           string
 	ViaOneBranch     string
 	Privacy          string
@@ -93,10 +90,18 @@ type SipMsg struct {
 	PAssertedId      *PAssertedId
 	UserAgent        string
 	Server           string
+	URIHost          string
+	URIRaw           string
+	URIUser          string
+	FirstMethod      string
+	FirstResp        string
+	FirstRespText    string
 	eof              int
 	hdr              string
 	hdrv             string
-
+	//Via                []*Via
+	//StartLine          *StartLine
+	//Headers            []*Header
 	//Accept             *Accept
 	//AlertInfo          string
 	//Allow              []string
@@ -520,9 +525,19 @@ func (s *SipMsg) ParseRemotePartyId(str string) {
 
 func (s *SipMsg) parseStartLine(str string) {
 	s.State = sipParseStateStartLine
-	s.StartLine = ParseStartLine(str)
-	if s.StartLine.Error != nil {
-		s.Error = fmt.Errorf("parseStartLine err: received err while parsing start line: %v", s.StartLine.Error)
+	sLine := ParseStartLine(str)
+	if sLine != nil {
+		s.FirstMethod = sLine.Method
+		s.FirstResp = sLine.Resp
+		s.FirstRespText = sLine.RespText
+	}
+	if sLine != nil && sLine.URI != nil {
+		s.URIHost = sLine.URI.Host
+		s.URIRaw = sLine.URI.Raw
+		s.URIUser = sLine.URI.User
+	}
+	if sLine.Error != nil {
+		s.Error = fmt.Errorf("parseStartLine err: received err while parsing start line: %v", sLine.Error)
 	}
 }
 
