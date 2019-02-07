@@ -526,12 +526,10 @@ func (s *SipMsg) ParseRemotePartyId(str string) {
 func (s *SipMsg) parseStartLine(str string) {
 	s.State = sipParseStateStartLine
 	sLine := ParseStartLine(str)
-	if sLine != nil {
-		s.FirstMethod = sLine.Method
-		s.FirstResp = sLine.Resp
-		s.FirstRespText = sLine.RespText
-	}
-	if sLine != nil && sLine.URI != nil {
+	s.FirstMethod = sLine.Method
+	s.FirstResp = sLine.Resp
+	s.FirstRespText = sLine.RespText
+	if sLine.URI != nil {
 		s.URIHost = sLine.URI.Host
 		s.URIRaw = sLine.URI.Raw
 		s.URIUser = sLine.URI.User

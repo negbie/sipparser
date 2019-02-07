@@ -119,6 +119,16 @@ func TestParseMsg(t *testing.T) {
 	}
 }
 
+func TestParseInviteMsg(t *testing.T) {
+	s := ParseMsg(testInviteMsg)
+	if s.Error != nil {
+		t.Errorf("[TestParseMsg] Error parsing msg. Recevied: %v", s.Error)
+	}
+	if len(s.Body) == 0 {
+		t.Error("[TestParseMsg] Error parsing msg. Body should have a length.")
+	}
+}
+
 func TestParseMsgMalformed(t *testing.T) {
 	m := "SIP/2.0 200 OK\r\nVia:\r\nTo:\rnContact\r\n   Frommmm     :asf\r\nCall-ID:111118149-3524331107-398662@barinfo.fooinfous.com\r\n\r\nv=0\r\no=Dialogic_SDP 1452654 0 IN IP4 0.0.0.0\r\ns=Dialogic-SIP\r\nc=IN IP4 4.71.122.135\r\nt=0 0\r\nm=audio 11676 RTP/AVP 0 101\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:101 telephone-event/8000\r\na=fmtp:101 0-15\r\na=silenceSupp:off - - - -\r\na=ptime:20\r\n"
 	s := ParseMsg(m)
